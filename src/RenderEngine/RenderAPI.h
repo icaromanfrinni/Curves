@@ -98,14 +98,14 @@ namespace CRAB
         std::vector<Mesh::Vertex> grid;
         {
             Mesh::Vertex p;
-            glm::vec3 color = { 0.0f, 0.0f, 0.0f };
+            glm::vec3 color;
             // XZ-axis
             for (int i = -5; i < 6; i++)
                 for (int k = -5; k < 6; k++)
                 {
-                    if (i == 0) color = { 0.0f, 0.0f, 1.0f };
-                    else if (k == 0) color = { 1.0f, 0.0f, 0.0f };
-                    else color = { 0.0f, 0.0f, 0.0f };
+                    if (i == 0) color = { 0.0f, 0.0f, 0.5f };
+                    else if (k == 0) color = { 0.5f, 0.0f, 0.0f };
+                    else color = { 0.2f, 0.2f, 0.2f };
 
                     p.Position = { i, 0.0f, -5.0f };  p.Color = color;
                     grid.push_back(p);
@@ -117,7 +117,7 @@ namespace CRAB
                     grid.push_back(p);
                 }
             // Y-axis
-            color = { 0.0f, 1.0f, 0.0f };
+            color = { 0.0f, 0.5f, 0.0f };
             p.Position = { 0.0f, 0.0f, 0.0f };  p.Color = color;
             grid.push_back(p);
             p.Position = { 0.0f, 1.0f, 0.0f };  p.Color = color;
@@ -146,7 +146,7 @@ namespace CRAB
 
             // render
             // ------
-            glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             ourShader.use();
 
