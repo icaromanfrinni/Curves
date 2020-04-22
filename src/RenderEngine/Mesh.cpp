@@ -4,8 +4,44 @@
 Mesh::Mesh(std::vector<Mesh::Vertex> vertices)
 {
     this->vertices = vertices;
-
+    this->primitive_type = GL_LINES;
+    this->with_points = true;
     // now that we have all the required data, set the vertex buffers and its attribute pointers.
+    setupMesh();
+}
+// overload constructor (from Bézier curve)
+Mesh::Mesh(const Bezier& curve)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = false;
+    
+    Mesh::Vertex v;
+    v.Color = { 1.0f, 1.0f, 1.0f };
+
+    for (int i = 0; i <= STEPS; i++)
+    {
+        float t = float(i) / STEPS;
+        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        this->vertices.push_back(v);
+    }
+
+    setupMesh();
+}
+// overload constructor (from Control points)
+Mesh::Mesh(const std::vector<CRAB::Vector4Df> &points)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = true;
+
+    Mesh::Vertex v;
+    v.Color = { 0.2f, 0.2f, 0.2f };
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        v.Position = { points[i].x, points[i].y, points[i].z };
+        this->vertices.push_back(v);
+    }
+
     setupMesh();
 }
 // destructor
@@ -18,7 +54,9 @@ void Mesh::Draw(Shader shader)
 {
     // draw mesh
     glBindVertexArray(VAO);
-    glDrawArrays(GL_LINES, 0, vertices.size());
+    glDrawArrays(this->primitive_type, 0, vertices.size());
+    if (this->with_points)
+        glDrawArrays(GL_POINTS, 0, vertices.size());
 }
 
 // initializes all the buffer objects/arrays

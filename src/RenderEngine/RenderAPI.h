@@ -125,6 +125,11 @@ namespace CRAB
         }
         Mesh grid_Mesh(grid);
 
+        // load curves
+        // -----------
+        ourMesh_List.push_back(Mesh(Bezier()));
+        ourMesh_List.push_back(Mesh(Bezier().points));
+
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------
         projection = glm::perspective(glm::radians(camera.FieldOfView), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.10f, 1000.0f);
@@ -163,6 +168,7 @@ namespace CRAB
             grid_Mesh.Draw(ourShader);
 
             // render
+            glPointSize(5.0f);
             for (int i = 0; i < ourMesh_List.size(); i++)
             {
                 ourMesh_List[i].Draw(ourShader);

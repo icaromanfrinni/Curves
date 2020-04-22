@@ -5,9 +5,8 @@
 Bezier::Bezier()
 {
 	points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
-	points.push_back(CRAB::Vector4Df{ 5.0f, 0.0f, 5.0f, 1.0f });
 	points.push_back(CRAB::Vector4Df{ 5.0f, 5.0f, 0.0f, 1.0f });
-	points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 5.0f, 1.0f });
+	points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 0.0f, 1.0f });
 }
 
 // DESTRUCTOR

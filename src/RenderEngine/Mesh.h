@@ -15,6 +15,9 @@
 #include <vector>
 
 #include "Shader.h"
+#include "Bezier.h"
+
+#define STEPS 50
 
 class Mesh
 {
@@ -34,6 +37,10 @@ public:
     /*  Functions  */
     // constructor
     Mesh(std::vector<Vertex> vertices);
+    // overload constructor (from Bézier curve)
+    Mesh(const Bezier& curve);
+    // overload constructor (from Control points)
+    Mesh(const std::vector<CRAB::Vector4Df> &points);
 	// destructor
 	~Mesh();
 
@@ -43,6 +50,12 @@ public:
 private:
     /*  Render data  */
     unsigned int VBO/*, EBO*/;
+
+    // OpenGL primitive type
+    GLenum primitive_type;
+
+    // With points
+    bool with_points;
 
     /*  Functions    */
     
