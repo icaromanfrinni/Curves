@@ -27,6 +27,42 @@ Mesh::Mesh(const Bezier& curve)
 
     setupMesh();
 }
+// overload constructor (from Bspline curve)
+Mesh::Mesh(const Bspline& curve)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = false;
+
+    Mesh::Vertex v;
+    v.Color = { 1.0f, 1.0f, 0.0f };
+
+    for (int i = 0; i <= STEPS; i++)
+    {
+        float t = float(i) / STEPS;
+        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        this->vertices.push_back(v);
+    }
+
+    setupMesh();
+}
+// overload constructor (from NURBS curve)
+Mesh::Mesh(const NURBS& curve)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = true;
+
+    Mesh::Vertex v;
+    v.Color = { 1.0f, 0.0f, 1.0f };
+
+    for (int i = 0; i <= STEPS; i++)
+    {
+        float t = float(i) / STEPS;
+        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        this->vertices.push_back(v);
+    }
+
+    setupMesh();
+}
 // overload constructor (from Control points)
 Mesh::Mesh(const std::vector<CRAB::Vector4Df> &points)
 {

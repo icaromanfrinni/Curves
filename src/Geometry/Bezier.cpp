@@ -4,9 +4,10 @@
 // -------------------
 Bezier::Bezier()
 {
-	points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
-	points.push_back(CRAB::Vector4Df{ 5.0f, 5.0f, 0.0f, 1.0f });
-	points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 5.0f, 5.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 10.0f, 6.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 15.0f, 0.0f, 0.0f, 1.0f });
 }
 
 // DESTRUCTOR
@@ -54,12 +55,6 @@ CRAB::Vector4Df Bezier::deriv2(float t) const
 	return d;
 }
 
-// ADD CONTROL POINTS
-// ------------------
-void Bezier::AddControlPoint(const CRAB::Vector4Df& p)
-{
-	points.push_back(p);
-}
 // RETURNS A POINT ON THE CURVE
 // ----------------------------
 CRAB::Vector4Df Bezier::getPosition(const float& t) const

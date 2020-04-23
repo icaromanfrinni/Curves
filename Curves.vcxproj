@@ -151,6 +151,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Geometry\Bezier.cpp" />
+    <ClCompile Include="src\Geometry\Bspline.cpp" />
+    <ClCompile Include="src\Geometry\NURBS.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RenderEngine\Camera.cpp" />
@@ -161,6 +163,8 @@
   <ItemGroup>
     <ClInclude Include="src\DataStructures\Linear_Algebra.h" />
     <ClInclude Include="src\Geometry\Bezier.h" />
+    <ClInclude Include="src\Geometry\Bspline.h" />
+    <ClInclude Include="src\Geometry\NURBS.h" />
     <ClInclude Include="src\RenderEngine\Camera.h" />
     <ClInclude Include="src\RenderEngine\Mesh.h" />
     <ClInclude Include="src\RenderEngine\RenderAPI.h" />

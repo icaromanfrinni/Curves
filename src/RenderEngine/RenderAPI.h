@@ -129,6 +129,13 @@ namespace CRAB
         // -----------
         ourMesh_List.push_back(Mesh(Bezier()));
         ourMesh_List.push_back(Mesh(Bezier().points));
+        /*ourMesh_List.push_back(Mesh(Bspline()));
+        ourMesh_List.push_back(Mesh(Bspline().points));*/
+        ourMesh_List.push_back(Mesh(NURBS()));
+        ourMesh_List.push_back(Mesh(NURBS().points));
+        // DEBUG
+        NURBS curvaTeste;
+        curvaTeste.Debug();
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

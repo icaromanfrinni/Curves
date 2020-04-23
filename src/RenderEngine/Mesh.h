@@ -16,6 +16,8 @@
 
 #include "Shader.h"
 #include "Bezier.h"
+#include "Bspline.h"
+#include "NURBS.h"
 
 #define STEPS 50
 
@@ -39,6 +41,10 @@ public:
     Mesh(std::vector<Vertex> vertices);
     // overload constructor (from Bézier curve)
     Mesh(const Bezier& curve);
+    // overload constructor (from Bspline curve)
+    Mesh(const Bspline& curve);
+    // overload constructor (from NURBS curve)
+    Mesh(const NURBS& curve);
     // overload constructor (from Control points)
     Mesh(const std::vector<CRAB::Vector4Df> &points);
 	// destructor

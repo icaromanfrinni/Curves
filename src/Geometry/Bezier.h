@@ -14,6 +14,16 @@
 
 class Bezier
 {
+private:
+	// BASIS FUNCTIONS
+	int binomialCoefficient(const int& n, const int& i) const;
+	float BernsteinPolynomial(const int& n, const int& i, const float& t) const;
+
+	// CALCULATES THE DERIVATIVE FOR A CURVE OF ORDER 'n'
+	// Reference: https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/bezier-der.html
+	CRAB::Vector4Df deriv(float t) const;
+	CRAB::Vector4Df deriv2(float t) const;
+
 public:
 	// Control Points
 	std::vector<CRAB::Vector4Df> points;
@@ -23,8 +33,6 @@ public:
 	// DESTRUCTOR
 	~Bezier();
 
-	// ADD CONTROL POINTS
-	void AddControlPoint(const CRAB::Vector4Df& p);
 	// RETURNS A POINT ON THE CURVE
 	CRAB::Vector4Df getPosition(const float& t) const;
 	// RETURNS THE CURVE TANGENT
@@ -41,14 +49,4 @@ public:
 	float getRadius(const float& t) const;
 	// CLOCKWISE CHECK
 	bool isClockwise(const float& t) const;
-
-private:
-	// BASIS FUNCTIONS
-	int binomialCoefficient(const int& n, const int& i) const;
-	float BernsteinPolynomial(const int& n, const int& i, const float& t) const;
-
-	// CALCULATES THE DERIVATIVE FOR A CURVE OF ORDER 'n'
-	// Reference: https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/bezier-der.html
-	CRAB::Vector4Df deriv(float t) const;
-	CRAB::Vector4Df deriv2(float t) const;
 };
