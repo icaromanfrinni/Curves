@@ -6,16 +6,18 @@
 // -------------------
 NURBS::NURBS()
 {
-	// control points
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 5.0f, 5.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 10.0f, 6.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 15.0f, 0.0f, 0.0f, 1.0f });
-
+}
+// OVERLOAD CONSTRUCTOR
+// --------------------
+NURBS::NURBS(const std::vector<CRAB::Vector4Df>& _points)
+	: points(_points)
+{
+	// weights
+	for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);
 	// degree
-	this->p = 3;
-
-	// knot vector
+	this->p = this->points.size() - 1;
+	// uniform knot vector
 	int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
@@ -30,6 +32,10 @@ NURBS::NURBS()
 			T.push_back(u);
 		}
 	}
+}
+NURBS::NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p, const std::vector<float>& _w, std::vector<float> _T)
+	: points(_points), p(_p), w(_w), T(_T)
+{
 }
 
 // DESTRUCTOR
@@ -54,10 +60,6 @@ float NURBS::N(const int& i, const int& p, const float& t) const
 	if (isnan(N2)) N2 = 0.0f;
 
 	return N1 + N2;
-}
-float NURBS::R(const int& i, const int& p, const float& t) const
-{
-	return N(i, p, t);
 }
 
 // FIND THE ith KNOT SPAN
@@ -90,43 +92,26 @@ CRAB::Vector4Df NURBS::getPosition(const float& t) const
 {
 	// Endpoint interpolation
 	if (t == 0.0f)
-		return points.front();
+		return this->points.front();
 	if (t == 1.0f)
-		return points.back();
+		return this->points.back();
 
 	CRAB::Vector4Df position = { 0.0f, 0.0f, 0.0f, 1.0f };
 	int span = this->FindSpan(t);
 
-	for (int i = 0; i <= this->p; i++)
+	// denominator
+	float d = 0.0f;
+	for (int j = 0; j <= this->p; j++)
 	{
-		position += points[span - this->p + i] * this->R(span - this->p + i, this->p, t);
+		int index = span - this->p + j;
+		d += this->w[index] * this->N(index, this->p, t);
 	}
+
+	for (int i = 0; i <= this->p; i++)
+	{	
+		int index = span - this->p + i;
+		position += this->points[index] * (this->w[index] * this->N(index, this->p, t) / d);
+	}
+
 	return position;
-}
-
-/* DEBUG */
-void NURBS::Debug()
-{
-	CRAB::Vector4Df position = { 0.0f, 0.0f, 0.0f, 1.0f };
-	
-	float t = 1.0f;
-	int span = this->FindSpan(t);
-	
-	std::cout << "T = ";
-	for (int i = 0; i < T.size(); i++)
-	{
-		std::cout << T[i] << "\t";
-	}
-	std::cout << std::endl;
-	std::cout << "span = " << span << std::endl;
-
-	for (int i = 0; i <= this->p; i++)
-	{
-		position += points[span - this->p + i] * this->R(span - this->p + i, this->p, t);
-		
-		std::cout << "\nith = " << span - this->p + i << std::endl;
-		std::cout << "N = " << this->R(span - this->p + i, this->p, t) << std::endl;
-	}
-	
-	std::cout << "position = [" << position.x << "; " << position.y << "; " << position.z << "]" << std::endl;
 }

@@ -127,15 +127,28 @@ namespace CRAB
 
         // load curves
         // -----------
-        ourMesh_List.push_back(Mesh(Bezier()));
-        ourMesh_List.push_back(Mesh(Bezier().points));
-        /*ourMesh_List.push_back(Mesh(Bspline()));
-        ourMesh_List.push_back(Mesh(Bspline().points));*/
-        ourMesh_List.push_back(Mesh(NURBS()));
-        ourMesh_List.push_back(Mesh(NURBS().points));
-        // DEBUG
-        NURBS curvaTeste;
-        curvaTeste.Debug();
+
+        // control points
+        std::vector<CRAB::Vector4Df> circle_points;
+	    circle_points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ 10.0f, 10.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ 10.0f, 20.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ 0.0f, 20.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ -10.0f, 20.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ -10.0f, 10.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ -10.0f, 0.0f, 0.0f, 1.0f });
+        circle_points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
+
+        // weights
+        float w = exp2f(0.5f) / 2.0f;
+        std::vector<float> circle_weights = { 1.0f, w, 1.0f, w, 1.0f, w, 1.0f, w, 1.0f };
+
+        // knot vector
+        std::vector<float> circle_knot = { 0.0f, 0.0f, 0.0f, 0.25f, 0.25f, 0.5f, 0.5f, 0.75f, 0.75f, 1.0f, 1.0f, 1.0f };
+
+        ourMesh_List.push_back(Mesh(NURBS(circle_points, 2, circle_weights, circle_knot)));
+        ourMesh_List.push_back(Mesh(circle_points));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

@@ -49,7 +49,7 @@ Mesh::Mesh(const Bspline& curve)
 Mesh::Mesh(const NURBS& curve)
 {
     this->primitive_type = GL_LINE_STRIP;
-    this->with_points = true;
+    this->with_points = false;
 
     Mesh::Vertex v;
     v.Color = { 1.0f, 0.0f, 1.0f };

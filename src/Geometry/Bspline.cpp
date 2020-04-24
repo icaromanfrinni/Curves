@@ -8,12 +8,13 @@ Bspline::Bspline()
 {
 	// control points
 	this->points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 5.0f, 5.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 10.0f, 6.0f, 0.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 15.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 1.0f, 1.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 3.0f, 2.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 4.0f, 1.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 5.0f, -1.0f, 0.0f, 1.0f });
 
 	// degree
-	this->p = 2;
+	this->p = 4;
 
 	// knot vector
 	int m = points.size() + this->p;
