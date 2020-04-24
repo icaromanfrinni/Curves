@@ -165,6 +165,7 @@
     <ClInclude Include="src\Geometry\Bezier.h" />
     <ClInclude Include="src\Geometry\Bspline.h" />
     <ClInclude Include="src\Geometry\NURBS.h" />
+    <ClInclude Include="src\Geometry\Primitives.h" />
     <ClInclude Include="src\RenderEngine\Camera.h" />
     <ClInclude Include="src\RenderEngine\Mesh.h" />
     <ClInclude Include="src\RenderEngine\RenderAPI.h" />
