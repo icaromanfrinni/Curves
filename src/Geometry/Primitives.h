@@ -27,8 +27,23 @@ namespace Primitive
         return NURBS(control_points, 2, weights, knot_vector);
     }
 
-    NURBS CircularArc()
+    NURBS CircularArc(const CRAB::Vector4Df& p0, const CRAB::Vector4Df& p1, const CRAB::Vector4Df& p2)
     {
-        return NURBS();
+        // control points
+        std::vector<CRAB::Vector4Df> control_points;
+        control_points.push_back(p0);
+        control_points.push_back(p1);
+        control_points.push_back(p2);
+
+        // weights
+        CRAB::Vector4Df p0p1 = (p1 - p0).to_unitary();
+        CRAB::Vector4Df p0p2 = (p2 - p0).to_unitary();
+        float w = CRAB::dot(p0p1, p0p2);
+        std::vector<float> weights = { 1.0f, w, 1.0f};
+
+        // knot vector
+        std::vector<float> knot_vector = { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f };
+
+        return NURBS(control_points, 2, weights, knot_vector);
     }
 }

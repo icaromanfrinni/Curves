@@ -34,6 +34,8 @@ public:
 	NURBS();
 	// OVERLOAD CONSTRUCTOR
 	NURBS(const std::vector<CRAB::Vector4Df>& _points);
+	NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p);
+	NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p, const std::vector<float>& _w);
 	NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p, const std::vector<float>& _w, std::vector<float> _T);
 	// DESTRUCTOR
 	~NURBS();

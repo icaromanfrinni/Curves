@@ -7,7 +7,7 @@
 Bspline::Bspline()
 {
 	// control points
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 5.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 1.0f, 1.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 3.0f, 2.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 4.0f, 1.0f, 0.0f, 1.0f });
@@ -44,19 +44,23 @@ Bspline::~Bspline()
 float Bspline::N(const int& i, const int& p, const float& t) const
 {
 	if (p == 0)
+	{
 		if (t >= this->T[i] && t < this->T[i + 1])
 			return 1.0f;
+		else if (t == this->T[i + 1] && t == this->T.back())
+			return 1.0f;
 		else return 0.0f;
+	}
 
-	float N1 = N(i, p - 1, t) * (t - this->T[i]) / (this->T[i + p] - this->T[i]);
-	if (isnan(N1)) N1 = 0.0f;
+	float left = this->N(i, p - 1, t) * (t - this->T[i]) / (this->T[i + p] - this->T[i]);
+	//std::cout << "N = " << left << " + ";
+	if (isnan(left)) left = 0.0f;
 
-	float N2 = N(i + 1, p - 1, t) * (this->T[i + p + 1] - t) / (this->T[i + p + 1] - this->T[i + 1]);
-	if (isnan(N2)) N2 = 0.0f;
+	float right = this->N(i + 1, p - 1, t) * (this->T[i + p + 1] - t) / (this->T[i + p + 1] - this->T[i + 1]);
+	//std::cout << right << std::endl;
+	if (isnan(right)) right = 0.0f;
 
-	//std::cout << "N(" << i << "," << p << ") = " << N1 + N2 << std::endl;
-
-	return N1 + N2;
+	return left + right;
 }
 
 // FIND THE ith KNOT SPAN
@@ -79,7 +83,7 @@ int Bspline::FindSpan(const float& t) const
 		
 		mid = (low + high) / 2;
 	}
-	
+
 	return mid;
 }
 
@@ -87,18 +91,15 @@ int Bspline::FindSpan(const float& t) const
 // ----------------------------
 CRAB::Vector4Df Bspline::getPosition(const float& t) const
 {
-	// Endpoint interpolation
-	if (t == 0.0f)
-		return points.front();
-	if (t == 1.0f)
-		return points.back();
-
 	CRAB::Vector4Df position = { 0.0f, 0.0f, 0.0f, 1.0f };
 	int span = this->FindSpan(t);
+
+	std::cout << "\nt = " << t << std::endl;
 
 	for (int i = 0; i <= this->p; i++)
 	{
 		position += points[span - this->p + i] * this->N(span - this->p + i, this->p, t);
+		std::cout << "P[" << span - this->p + i << "] * N[" << span - this->p + i << ", " << this->p << "](" << t << ") = " << this->N(span - this->p + i, this->p, t) << std::endl;
 	}
 	return position;
 }

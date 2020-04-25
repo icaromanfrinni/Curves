@@ -4,7 +4,7 @@
 // -------------------
 Bezier::Bezier()
 {
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 5.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 1.0f, 1.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 3.0f, 2.0f, 0.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 4.0f, 1.0f, 0.0f, 1.0f });

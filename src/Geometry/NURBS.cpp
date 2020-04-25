@@ -12,24 +12,68 @@ NURBS::NURBS()
 NURBS::NURBS(const std::vector<CRAB::Vector4Df>& _points)
 	: points(_points)
 {
+	// degree
+	this->p = this->points.size() - 1;
+
 	// weights
 	for (int i = 0; i < this->points.size(); i++)
 		this->w.push_back(1.0f);
-	// degree
-	this->p = this->points.size() - 1;
+	
 	// uniform knot vector
 	int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
-		if (i <= p)
-			T.push_back(0.0f);
+		if (i <= this->p)
+			this->T.push_back(0.0f);
 		else if (i > n)
-			T.push_back(1.0f);
+			this->T.push_back(1.0f);
 		else
 		{
-			float u = float(i - p) / float(n - p + 1);
-			T.push_back(u);
+			float u = float(i - this->p) / float(n - this->p + 1);
+			this->T.push_back(u);
+		}
+	}
+}
+NURBS::NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p)
+	: points(_points), p(_p)
+{
+	// weights
+	for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);
+
+	// uniform knot vector
+	int m = points.size() + this->p;
+	int n = points.size() - 1;
+	for (int i = 0; i <= m; i++)
+	{
+		if (i <= this->p)
+			this->T.push_back(0.0f);
+		else if (i > n)
+			this->T.push_back(1.0f);
+		else
+		{
+			float u = float(i - this->p) / float(n - this->p + 1);
+			this->T.push_back(u);
+		}
+	}
+}
+NURBS::NURBS(const std::vector<CRAB::Vector4Df>& _points, const int& _p, const std::vector<float>& _w)
+	: points(_points), p(_p), w(_w)
+{
+	// uniform knot vector
+	int m = points.size() + this->p;
+	int n = points.size() - 1;
+	for (int i = 0; i <= m; i++)
+	{
+		if (i <= this->p)
+			this->T.push_back(0.0f);
+		else if (i > n)
+			this->T.push_back(1.0f);
+		else
+		{
+			float u = float(i - this->p) / float(n - this->p + 1);
+			this->T.push_back(u);
 		}
 	}
 }

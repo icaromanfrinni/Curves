@@ -31,7 +31,7 @@ Mesh::Mesh(const Bezier& curve)
 Mesh::Mesh(const Bspline& curve)
 {
     this->primitive_type = GL_LINE_STRIP;
-    this->with_points = false;
+    this->with_points = true;
 
     Mesh::Vertex v;
     v.Color = { 1.0f, 1.0f, 0.0f };
@@ -39,7 +39,8 @@ Mesh::Mesh(const Bspline& curve)
     for (int i = 0; i <= STEPS; i++)
     {
         float t = float(i) / STEPS;
-        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        CRAB::Vector4Df position = curve.getPosition(t);
+        v.Position = { position.x, position.y, position.z };
         this->vertices.push_back(v);
     }
 

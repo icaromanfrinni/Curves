@@ -128,9 +128,14 @@ namespace CRAB
 
         // load curves
         // -----------
-        NURBS circle1 = Primitive::Circle(5.0f);
-        ourMesh_List.push_back(Mesh(circle1));
-        ourMesh_List.push_back(Mesh(circle1.points));
+        Bspline c1;
+        ourMesh_List.push_back(Mesh(c1));
+        ourMesh_List.push_back(Mesh(c1.points));
+
+        Bezier c2;
+        ourMesh_List.push_back(Mesh(c2));
+        ourMesh_List.push_back(Mesh(c2.points));
+
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------
