@@ -136,6 +136,10 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(c2));
         ourMesh_List.push_back(Mesh(c2.points));
 
+        NURBS c3;
+        ourMesh_List.push_back(Mesh(c3));
+        ourMesh_List.push_back(Mesh(c3.points));
+
         // draw the tangent vector
         // -----------------------
         std::vector<Mesh::Vertex> tangents;
@@ -171,6 +175,22 @@ namespace CRAB
             tangents.push_back(v);
         }
         ourMesh_List.push_back(Mesh(tangents));
+        // NURBS
+        tangents.clear();
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c3.getPosition(t);
+            CRAB::Vector4Df head = c3.getPosition(t) + c3.getTangent(t);
+            Mesh::Vertex v;
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            tangents.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            tangents.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(tangents));
 
         // draw the normal vector
         // ----------------------
@@ -200,6 +220,22 @@ namespace CRAB
             CRAB::Vector4Df head = c2.getPosition(t) + c2.getNormal(t) * c2.getRadius(t);
             Mesh::Vertex v;
             v.Color = { 1.0f, 1.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            normals.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = { head.x, head.y, head.z };
+            normals.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(normals));
+        // NURBS
+        normals.clear();
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c3.getPosition(t);
+            CRAB::Vector4Df head = c3.getPosition(t) + c3.getNormal(t) * c3.getRadius(t);
+            Mesh::Vertex v;
+            v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
             normals.push_back(v);
             v.Color = { 0.5f, 1.0f, 0.5f };

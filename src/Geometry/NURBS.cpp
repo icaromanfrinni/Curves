@@ -6,6 +6,36 @@
 // -------------------
 NURBS::NURBS()
 {
+	// control points
+	this->points.push_back(CRAB::Vector4Df{ -5.0f, 0.0f, 1.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 5.0f, 1.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 5.0f, 0.0f, 1.0f, 1.0f });
+
+	// weights
+	/*for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);*/
+	CRAB::Vector4Df p0p1 = (this->points[1] - this->points[0]).to_unitary();
+	CRAB::Vector4Df p0p2 = (this->points[2] - this->points[0]).to_unitary();
+	this->w = { 1.0f, CRAB::dot(p0p1, p0p2), 1.0f };
+
+	// degree
+	this->p = this->points.size() - 1;
+
+	// knot vector
+	int m = points.size() + this->p;
+	int n = points.size() - 1;
+	for (int i = 0; i <= m; i++)
+	{
+		if (i <= p)
+			T.push_back(0.0f);
+		else if (i > n)
+			T.push_back(1.0f);
+		else
+		{
+			float u = float(i - p) / float(n - p + 1);
+			T.push_back(u);
+		}
+	}
 }
 // OVERLOAD CONSTRUCTOR
 // --------------------
@@ -93,18 +123,76 @@ NURBS::~NURBS()
 float NURBS::N(const int& i, const int& p, const float& t) const
 {
 	if (p == 0)
+	{
 		if (t >= this->T[i] && t < this->T[i + 1])
 			return 1.0f;
+		else if (t == this->T[i + 1] && t == this->T.back())
+			return 1.0f;
 		else return 0.0f;
+	}
 
-	float N1 = N(i, p - 1, t) * (t - this->T[i]) / (this->T[i + p] - this->T[i]);
-	if (isnan(N1)) N1 = 0.0f;
+	float left = this->N(i, p - 1, t) * (t - this->T[i]) / (this->T[i + p] - this->T[i]);
+	if (isnan(left)) left = 0.0f;
 
-	float N2 = N(i + 1, p - 1, t) * (this->T[i + p + 1] - t) / (this->T[i + p + 1] - this->T[i + 1]);
-	if (isnan(N2)) N2 = 0.0f;
+	float right = this->N(i + 1, p - 1, t) * (this->T[i + p + 1] - t) / (this->T[i + p + 1] - this->T[i + 1]);
+	if (isnan(right)) right = 0.0f;
 
-	return N1 + N2;
+	return left + right;
 }
+
+// ****************************************************************************************************
+
+float NURBS::dN(const int& i, const int& p, const float& t) const
+{
+	float left = this->N(i, p - 1, t) * p / (this->T[i + p] - this->T[i]);
+	if (isnan(left)) left = 0.0f;
+
+	float right = this->N(i + 1, p - 1, t) * p / (this->T[i + p + 1] - this->T[i + 1]);
+	if (isnan(right)) right = 0.0f;
+
+	return left - right;
+}
+float NURBS::dN2(const int& i, const int& p, const float& t) const
+{
+	float left = this->dN(i, p - 1, t) * p / (this->T[i + p] - this->T[i]);
+	if (isnan(left)) left = 0.0f;
+
+	float right = this->dN(i + 1, p - 1, t) * p / (this->T[i + p + 1] - this->T[i + 1]);
+	if (isnan(right)) right = 0.0f;
+
+	return left - right;
+}
+
+// DERIVATIVES
+// -----------
+CRAB::Vector4Df NURBS::deriv(const float& t) const
+{
+	CRAB::Vector4Df deriv = { 0.0f, 0.0f, 0.0f, 0.0f };
+	int span = this->FindSpan(t);
+
+	for (int i = 0; i <= this->p; i++)
+	{
+		int index = span - this->p + i;
+		deriv += points[index] * this->dN(index, this->p, t);
+	}
+
+	return deriv;
+}
+CRAB::Vector4Df NURBS::deriv2(const float& t) const
+{
+	CRAB::Vector4Df deriv2 = { 0.0f, 0.0f, 0.0f, 0.0f };
+	int span = this->FindSpan(t);
+
+	for (int i = 0; i <= this->p; i++)
+	{
+		int index = span - this->p + i;
+		deriv2 += points[index] * this->dN2(index, this->p, t);
+	}
+
+	return deriv2;
+}
+
+// ****************************************************************************************************
 
 // FIND THE ith KNOT SPAN
 // ----------------------
@@ -134,12 +222,6 @@ int NURBS::FindSpan(const float& t) const
 // ----------------------------
 CRAB::Vector4Df NURBS::getPosition(const float& t) const
 {
-	// Endpoint interpolation
-	if (t == 0.0f)
-		return this->points.front();
-	if (t == 1.0f)
-		return this->points.back();
-
 	CRAB::Vector4Df position = { 0.0f, 0.0f, 0.0f, 1.0f };
 	int span = this->FindSpan(t);
 
@@ -158,4 +240,70 @@ CRAB::Vector4Df NURBS::getPosition(const float& t) const
 	}
 
 	return position;
+}
+
+// **********************************************************************************************************
+
+// RETURNS THE CURVE TANGENT
+// -------------------------
+CRAB::Vector4Df NURBS::getTangent(const float& t) const
+{
+	return this->deriv(t).to_unitary();
+}
+
+// RETURNS THE CURVE NORMAL
+// ------------------------
+CRAB::Vector4Df NURBS::getNormal(const float& t) const
+{
+	CRAB::Vector4Df deriv = this->deriv(t).to_unitary();
+	CRAB::Vector4Df deriv2 = this->deriv2(t).to_unitary();
+	CRAB::Vector4Df normal = deriv2 - deriv * (dot(deriv2, deriv) / deriv.lengthsq());
+	return normal.to_unitary();
+}
+
+// RETURNS THE CURVE NORMAL UP (Yaw vector)
+// ----------------------------------------
+CRAB::Vector4Df NURBS::getNormalUp(const float& t) const
+{
+	CRAB::Vector4Df tan = this->getTangent(t);
+	CRAB::Vector4Df vUp = { 0.0f, 1.0f, 0.0f, 0.0f };
+	CRAB::Vector4Df vAux = CRAB::cross(vUp, tan).to_unitary();
+	CRAB::Vector4Df n = CRAB::cross(tan, vAux).to_unitary();
+	return n;
+}
+
+// RETURNS THE CURVE BINORMAL
+// --------------------------
+CRAB::Vector4Df NURBS::getBinormal(const float& t) const
+{
+	return CRAB::cross(getTangent(t), getNormal(t)).to_unitary();
+}
+
+// RETURNS THE CURVATURE
+// ---------------------
+float NURBS::getCurvature(const float& t) const
+{
+	CRAB::Vector4Df deriv = this->deriv(t);
+	CRAB::Vector4Df deriv2 = this->deriv2(t);
+	float k = cross(deriv, deriv2).length() / powf(deriv.length(), 3.0f);
+	return k;
+}
+
+// RETURNS THE RADIUS OF CURVATURE
+// -------------------------------
+float NURBS::getRadius(const float& t) const
+{
+	float r = 1.0f / this->getCurvature(t);
+	return r;
+}
+
+// CLOCKWISE CHECK
+// ---------------
+bool NURBS::isClockwise(const float& t) const
+{
+	CRAB::Vector4Df vup = cross(this->getNormal(t), this->getTangent(t)).to_unitary();
+	float dotP = dot(vup, this->getNormalUp(t));
+	if (dotP > 0.0f)
+		return true;
+	else return false;
 }

@@ -22,7 +22,6 @@ private:
 	// DERIVATIVES
 	CRAB::Vector4Df deriv(const float& t) const;
 	CRAB::Vector4Df deriv2(const float& t) const;
-	//CRAB::Vector4Df getPk(const int& k, const int& i) const;
 	// FIND THE ith KNOT SPAN
 	int FindSpan(const float& t) const;
 	// Degree of the basis function
