@@ -176,7 +176,7 @@ namespace CRAB
         }
         ourMesh_List.push_back(Mesh(tangents));
         // NURBS
-        tangents.clear();
+        /*tangents.clear();
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
@@ -190,7 +190,7 @@ namespace CRAB
             v.Position = { head.x, head.y, head.z };
             tangents.push_back(v);
         }
-        ourMesh_List.push_back(Mesh(tangents));
+        ourMesh_List.push_back(Mesh(tangents));*/
 
         // draw the normal vector
         // ----------------------
@@ -228,7 +228,7 @@ namespace CRAB
         }
         ourMesh_List.push_back(Mesh(normals));
         // NURBS
-        normals.clear();
+       /* normals.clear();
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
@@ -242,7 +242,7 @@ namespace CRAB
             v.Position = { head.x, head.y, head.z };
             normals.push_back(v);
         }
-        ourMesh_List.push_back(Mesh(normals));
+        ourMesh_List.push_back(Mesh(normals));*/
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------
