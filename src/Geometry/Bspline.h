@@ -17,6 +17,7 @@ class Bspline
 private:
 	// B-SPLINE BASIS FUNCTIONS
 	float N(const int& i, const int& p, const float& t) const;
+	float dN(const int& i, const int& p, const float& t) const;
 	// FIND THE ith KNOT SPAN
 	int FindSpan(const float& t) const;
 	// Degree of the basis function
@@ -35,4 +36,6 @@ public:
 
 	// RETURNS A POINT ON THE CURVE
 	CRAB::Vector4Df getPosition(const float& t) const;
+	// RETURNS THE CURVE TANGENT
+	CRAB::Vector4Df getTangent(const float& t) const;
 };

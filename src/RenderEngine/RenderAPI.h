@@ -136,6 +136,41 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(c2));
         ourMesh_List.push_back(Mesh(c2.points));
 
+        // draw the tangent vector
+        // -----------------------
+        std::vector<Mesh::Vertex> tangents;
+        // B-splines
+        tangents.clear();
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c1.getPosition(t);
+            CRAB::Vector4Df head = c1.getPosition(t) + c1.getTangent(t);
+            Mesh::Vertex v;
+            v.Color = { 1.0f, 1.0f, 0.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            tangents.push_back(v);
+            v.Color = { 0.5f, 0.5f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            tangents.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(tangents));
+        // Bezier
+        tangents.clear();
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c2.getPosition(t);
+            CRAB::Vector4Df head = c2.getPosition(t) + c2.getTangent(t);
+            Mesh::Vertex v;
+            v.Color = { 1.0f, 1.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            tangents.push_back(v);
+            v.Color = { 0.5f, 0.5f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            tangents.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(tangents));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

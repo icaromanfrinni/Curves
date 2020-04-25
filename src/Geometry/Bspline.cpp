@@ -62,6 +62,16 @@ float Bspline::N(const int& i, const int& p, const float& t) const
 
 	return left + right;
 }
+float Bspline::dN(const int& i, const int& p, const float& t) const
+{
+	float left = this->N(i, p - 1, t) * p / (this->T[i + p] - this->T[i]);
+	if (isnan(left)) left = 0.0f;
+
+	float right = this->N(i + 1, p - 1, t) * p / (this->T[i + p + 1] - this->T[i + 1]);
+	if (isnan(right)) right = 0.0f;
+
+	return left - right;
+}
 
 // FIND THE ith KNOT SPAN
 // ----------------------
@@ -102,4 +112,19 @@ CRAB::Vector4Df Bspline::getPosition(const float& t) const
 		std::cout << "P[" << span - this->p + i << "] * N[" << span - this->p + i << ", " << this->p << "](" << t << ") = " << this->N(span - this->p + i, this->p, t) << std::endl;
 	}
 	return position;
+}
+
+// RETURNS THE CURVE TANGENT
+// -------------------------
+CRAB::Vector4Df Bspline::getTangent(const float& t) const
+{
+	CRAB::Vector4Df tangent = { 0.0f, 0.0f, 0.0f, 1.0f };
+	int span = this->FindSpan(t);
+
+	for (int i = 0; i <= this->p; i++)
+	{
+		tangent += points[span - this->p + i] * this->dN(span - this->p + i, this->p, t);
+	}
+
+	return tangent.to_unitary();
 }
