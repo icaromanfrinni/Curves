@@ -88,7 +88,8 @@ CRAB::Vector4Df Bspline::deriv(const float& t) const
 
 	for (int i = 0; i <= this->p; i++)
 	{
-		deriv += points[span - this->p + i] * this->dN(span - this->p + i, this->p, t);
+		int index = span - this->p + i;
+		deriv += points[index] * this->dN(index, this->p, t);
 	}
 
 	return deriv;
@@ -100,7 +101,8 @@ CRAB::Vector4Df Bspline::deriv2(const float& t) const
 
 	for (int i = 0; i <= this->p; i++)
 	{
-		deriv2 += points[span - this->p + i] * this->dN2(span - this->p + i, this->p, t);
+		int index = span - this->p + i;
+		deriv2 += points[index] * this->dN2(index, this->p, t);
 	}
 	
 	return deriv2;

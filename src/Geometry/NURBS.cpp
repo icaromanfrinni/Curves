@@ -7,15 +7,17 @@
 NURBS::NURBS()
 {
 	// control points
-	this->points.push_back(CRAB::Vector4Df{ -5.0f, 0.0f, 1.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 5.0f, 1.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 5.0f, 0.0f, 1.0f, 1.0f });
+	CRAB::Vector4Df p0 = { -5.0f, 0.0f, 1.0f, 1.0f };
+	CRAB::Vector4Df p1 = { 0.0f, 5.0f, 1.0f, 1.0f };
+	CRAB::Vector4Df p2 = { 5.0f, 0.0f, 1.0f, 1.0f };
+
+	this->points.push_back(p0);
+	this->points.push_back(p1);
+	this->points.push_back(p2);
 
 	// weights
-	/*for (int i = 0; i < this->points.size(); i++)
-		this->w.push_back(1.0f);*/
-	CRAB::Vector4Df p0p1 = (this->points[1] - this->points[0]).to_unitary();
-	CRAB::Vector4Df p0p2 = (this->points[2] - this->points[0]).to_unitary();
+	CRAB::Vector4Df p0p1 = (p1 - p0).to_unitary();
+	CRAB::Vector4Df p0p2 = (p2 - p0).to_unitary();
 	this->w = { 1.0f, CRAB::dot(p0p1, p0p2), 1.0f };
 
 	// degree
@@ -139,6 +141,53 @@ float NURBS::N(const int& i, const int& p, const float& t) const
 
 	return left + right;
 }
+float NURBS::dN(const int& i, const int& p, const float& t) const
+{
+	float left = this->N(i, p - 1, t) * p / (this->T[i + p] - this->T[i]);
+	if (isnan(left)) left = 0.0f;
+
+	float right = this->N(i + 1, p - 1, t) * p / (this->T[i + p + 1] - this->T[i + 1]);
+	if (isnan(right)) right = 0.0f;
+
+	return left - right;
+}
+
+// DERIVATIVES
+// -----------
+CRAB::Vector4Df NURBS::deriv(const float& t) const
+{
+	int span = this->FindSpan(t);
+
+	CRAB::Vector4Df A = { 0.0f, 0.0f, 0.0f, 0.0f };
+	for (int i = 0; i <= this->p; i++)
+	{
+		int index = span - this->p + i;
+		A += (this->points[index] * this->w[index]) * this->N(index, this->p, t);
+	}
+
+	CRAB::Vector4Df derivA = { 0.0f, 0.0f, 0.0f, 0.0f };
+	for (int i = 0; i <= this->p; i++)
+	{
+		int index = span - this->p + i;
+		derivA += (this->points[index] * this->w[index]) * this->dN(index, this->p, t);
+	}
+
+	float D = 0.0f;
+	for (int j = 0; j <= this->p; j++)
+	{
+		int index = span - this->p + j;
+		D += this->w[index] * this->N(index, this->p, t);
+	}
+
+	float derivD = 0.0f;
+	for (int j = 0; j <= this->p; j++)
+	{
+		int index = span - this->p + j;
+		derivD += this->w[index] * this->dN(index, this->p, t);
+	}
+
+	return (derivA * D - A * derivD) / powf(D, 2.0f);
+}
 
 // FIND THE ith KNOT SPAN
 // ----------------------
@@ -180,10 +229,17 @@ CRAB::Vector4Df NURBS::getPosition(const float& t) const
 	}
 
 	for (int i = 0; i <= this->p; i++)
-	{	
+	{
 		int index = span - this->p + i;
-		position += this->points[index] * (this->w[index] * this->N(index, this->p, t) / d);
+		position += (this->points[index] * this->w[index]) * this->N(index, this->p, t) / d;
 	}
 
 	return position;
+}
+
+// RETURNS THE CURVE TANGENT
+// -------------------------
+CRAB::Vector4Df NURBS::getTangent(const float& t) const
+{
+	return this->deriv(t).to_unitary();
 }

@@ -176,7 +176,7 @@ namespace CRAB
         }
         ourMesh_List.push_back(Mesh(tangents));
         // NURBS
-        /*tangents.clear();
+        tangents.clear();
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
@@ -190,7 +190,7 @@ namespace CRAB
             v.Position = { head.x, head.y, head.z };
             tangents.push_back(v);
         }
-        ourMesh_List.push_back(Mesh(tangents));*/
+        ourMesh_List.push_back(Mesh(tangents));
 
         // draw the normal vector
         // ----------------------

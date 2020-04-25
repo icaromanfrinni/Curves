@@ -21,7 +21,8 @@ Mesh::Mesh(const Bezier& curve)
     for (int i = 0; i <= STEPS; i++)
     {
         float t = float(i) / STEPS;
-        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        CRAB::Vector4Df position = curve.getPosition(t);
+        v.Position = { position.x, position.y, position.z };
         this->vertices.push_back(v);
     }
 
@@ -58,7 +59,8 @@ Mesh::Mesh(const NURBS& curve)
     for (int i = 0; i <= STEPS; i++)
     {
         float t = float(i) / STEPS;
-        v.Position = { curve.getPosition(t).x, curve.getPosition(t).y, curve.getPosition(t).z };
+        CRAB::Vector4Df position = curve.getPosition(t);
+        v.Position = { position.x, position.y, position.z };
         this->vertices.push_back(v);
     }
 
