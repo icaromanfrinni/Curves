@@ -128,13 +128,13 @@ namespace CRAB
 
         // load curves
         // -----------
-        Bspline c1;
+        /*Bspline c1;
         ourMesh_List.push_back(Mesh(c1));
         ourMesh_List.push_back(Mesh(c1.points));
 
         Bezier c2;
         ourMesh_List.push_back(Mesh(c2));
-        ourMesh_List.push_back(Mesh(c2.points));
+        ourMesh_List.push_back(Mesh(c2.points));*/
 
         NURBS c3;
         ourMesh_List.push_back(Mesh(c3));
@@ -143,45 +143,45 @@ namespace CRAB
         // draw the tangent vector
         // -----------------------
         std::vector<Mesh::Vertex> tangents;
-        // B-splines
-        tangents.clear();
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c1.getPosition(t);
-            CRAB::Vector4Df head = c1.getPosition(t) + c1.getTangent(t);
-            Mesh::Vertex v;
-            v.Color = { 1.0f, 1.0f, 0.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            tangents.push_back(v);
-            v.Color = { 0.5f, 0.5f, 1.0f };
-            v.Position = { head.x, head.y, head.z };
-            tangents.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(tangents));
-        // Bezier
-        tangents.clear();
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c2.getPosition(t);
-            CRAB::Vector4Df head = c2.getPosition(t) + c2.getTangent(t);
-            Mesh::Vertex v;
-            v.Color = { 1.0f, 1.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            tangents.push_back(v);
-            v.Color = { 0.5f, 0.5f, 1.0f };
-            v.Position = { head.x, head.y, head.z };
-            tangents.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(tangents));
+        //// B-splines
+        //tangents.clear();
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    CRAB::Vector4Df tail = c1.getPosition(t);
+        //    CRAB::Vector4Df head = tail + c1.getTangent(t);
+        //    Mesh::Vertex v;
+        //    v.Color = { 1.0f, 1.0f, 0.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    tangents.push_back(v);
+        //    v.Color = { 0.5f, 0.5f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    tangents.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(tangents));
+        //// Bezier
+        //tangents.clear();
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    CRAB::Vector4Df tail = c2.getPosition(t);
+        //    CRAB::Vector4Df head = tail + c2.getTangent(t);
+        //    Mesh::Vertex v;
+        //    v.Color = { 1.0f, 1.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    tangents.push_back(v);
+        //    v.Color = { 0.5f, 0.5f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    tangents.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(tangents));
         // NURBS
         tangents.clear();
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
             CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head = c3.getPosition(t) + c3.getTangent(t);
+            CRAB::Vector4Df head = tail + c3.getTangent(t);
             Mesh::Vertex v;
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
@@ -195,45 +195,45 @@ namespace CRAB
         // draw the normal vector
         // ----------------------
         std::vector<Mesh::Vertex> normals;
-        // B-splines
-        normals.clear();
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c1.getPosition(t);
-            CRAB::Vector4Df head = c1.getPosition(t) + c1.getNormal(t) * c1.getRadius(t);
-            Mesh::Vertex v;
-            v.Color = { 1.0f, 1.0f, 0.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            normals.push_back(v);
-            v.Color = { 0.5f, 1.0f, 0.0f };
-            v.Position = { head.x, head.y, head.z };
-            normals.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(normals));
-        // Bezier
-        normals.clear();
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c2.getPosition(t);
-            CRAB::Vector4Df head = c2.getPosition(t) + c2.getNormal(t) * c2.getRadius(t);
-            Mesh::Vertex v;
-            v.Color = { 1.0f, 1.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            normals.push_back(v);
-            v.Color = { 0.5f, 1.0f, 0.5f };
-            v.Position = { head.x, head.y, head.z };
-            normals.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(normals));
+        //// B-splines
+        //normals.clear();
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    CRAB::Vector4Df tail = c1.getPosition(t);
+        //    CRAB::Vector4Df head = tail + c1.getNormal(t) * c1.getRadius(t);
+        //    Mesh::Vertex v;
+        //    v.Color = { 1.0f, 1.0f, 0.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    normals.push_back(v);
+        //    v.Color = { 0.5f, 1.0f, 0.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    normals.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(normals));
+        //// Bezier
+        //normals.clear();
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    CRAB::Vector4Df tail = c2.getPosition(t);
+        //    CRAB::Vector4Df head = tail + c2.getNormal(t) * c2.getRadius(t);
+        //    Mesh::Vertex v;
+        //    v.Color = { 1.0f, 1.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    normals.push_back(v);
+        //    v.Color = { 0.5f, 1.0f, 0.5f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    normals.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(normals));
         // NURBS
-       /* normals.clear();
+        normals.clear();
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
             CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head = c3.getPosition(t) + c3.getNormal(t) * c3.getRadius(t);
+            CRAB::Vector4Df head = tail + c3.getNormal(t);// *c3.getRadius(t);
             Mesh::Vertex v;
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
@@ -242,7 +242,7 @@ namespace CRAB
             v.Position = { head.x, head.y, head.z };
             normals.push_back(v);
         }
-        ourMesh_List.push_back(Mesh(normals));*/
+        ourMesh_List.push_back(Mesh(normals));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

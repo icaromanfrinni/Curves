@@ -191,6 +191,7 @@ float Bspline::getCurvature(const float& t) const
 	CRAB::Vector4Df deriv = this->deriv(t);
 	CRAB::Vector4Df deriv2 = this->deriv2(t);
 	float k = cross(deriv, deriv2).length() / powf(deriv.length(), 3.0f);
+
 	return k;
 }
 
@@ -199,6 +200,7 @@ float Bspline::getCurvature(const float& t) const
 float Bspline::getRadius(const float& t) const
 {
 	float r = 1.0f / this->getCurvature(t);
+
 	return r;
 }
 

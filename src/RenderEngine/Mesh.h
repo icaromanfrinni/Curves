@@ -19,7 +19,7 @@
 #include "Bspline.h"
 #include "NURBS.h"
 
-#define STEPS 10
+#define STEPS 100
 
 class Mesh
 {
