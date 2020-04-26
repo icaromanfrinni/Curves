@@ -7,39 +7,56 @@
 NURBS::NURBS()
 {
 	// control points
-	/*this->points.push_back({ -5.77f, 0.0f, 5.0f, 1.0f });
-	this->points.push_back({ -5.77f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 10.0f, 0.0f, 1.0f });
-	this->points.push_back({ 5.77f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 5.77f, 0.0f, -5.0f, 1.0f });*/
+	//this->points.push_back({ 0.0f, -10.0f, 0.0f, 1.0f });
+	/*this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 0.0f, 5.0f, 0.0f, 1.0f });
+	this->points.push_back({ 5.0f, 5.0f, 0.0f, 1.0f });*/
+	//this->points.push_back({ 15.0f, 5.0f, 0.0f, 1.0f });
 
-	this->points.push_back({ -10.0f, 0.0f, 0.0f, 1.0f });
+	/*this->points.push_back({ -10.0f, 0.0f, 0.0f, 1.0f });
 	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
 	this->points.push_back({ -5.0f, 0.0f, 5.0f, 1.0f });
 	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
-	this->points.push_back({ 10.0f, 0.0f, -10.0f, 1.0f });
+	this->points.push_back({ 10.0f, 0.0f, -10.0f, 1.0f });*/
+
+	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 5.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 5.0f, 10.0f, 0.0f, 1.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f, 1.0f });
+	this->points.push_back({ -5.0f, 10.0f, 0.0f, 1.0f });
+	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
 
 	// weights
-	this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, sinf(M_PI / 4.0f), 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, sinf(M_PI / 4.0f), 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
 
 	// degree
-	this->p = 3;// this->points.size() - 1;
+	this->p = 2;
+	//this->p = this->points.size() - 1;
 
 	// knot vector
-	int m = points.size() + this->p;
+	/*int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
 		if (i <= p)
-			T.push_back(0.0f);
+			this->T.push_back(0.0f);
 		else if (i > n)
-			T.push_back(1.0f);
+			this->T.push_back(1.0f);
 		else
 		{
 			float u = float(i - p) / float(n - p + 1);
-			T.push_back(u);
+			this->T.push_back(u);
 		}
-	}
+	}*/
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
+	this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
 }
 // OVERLOAD CONSTRUCTOR
 // --------------------
@@ -303,7 +320,8 @@ CRAB::Vector4Df NURBS::getPosition(const float& t) const
 CRAB::Vector4Df NURBS::getTangent(const float& t) const
 {
 	/*CRAB::Vector4Df result = this->deriv(t).to_unitary();
-	std::cout << "tan = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;*/
+	std::cout << "tan = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;
+	return result;*/
 
 	return this->deriv(t).to_unitary();
 
@@ -316,20 +334,26 @@ CRAB::Vector4Df NURBS::getTangent(const float& t) const
 // ------------------------
 CRAB::Vector4Df NURBS::getNormal(const float& t) const
 {
-	CRAB::Vector4Df d1 = this->deriv(t).to_unitary();
-	CRAB::Vector4Df d2 = this->deriv2(t).to_unitary();
-	CRAB::Vector4Df normal = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
-	return normal.to_unitary();
+	CRAB::Vector4Df d1 = this->deriv(t);
+	CRAB::Vector4Df d2 = this->deriv2(t);
+	CRAB::Vector4Df n = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
+
+	/*CRAB::Vector4Df result = n.to_unitary();
+	std::cout << "normal = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;
+	return result;*/
+
+	return n.to_unitary();
 }
 
 // RETURNS THE CURVE NORMAL UP (Yaw vector)
 // ----------------------------------------
 CRAB::Vector4Df NURBS::getNormalUp(const float& t) const
 {
-	CRAB::Vector4Df d1 = this->deriv(t).to_unitary();
-	CRAB::Vector4Df d2 = this->deriv2(t).to_unitary();
-	CRAB::Vector4Df n = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
-	return n.to_unitary();
+	CRAB::Vector4Df tan = this->getTangent(t);
+	CRAB::Vector4Df vUp = { 0.0f, 1.0f, 0.0f, 0.0f };
+	CRAB::Vector4Df vAux = CRAB::cross(vUp, tan).to_unitary();
+	CRAB::Vector4Df n = CRAB::cross(tan, vAux).to_unitary();
+	return n;
 }
 
 // RETURNS THE CURVE BINORMAL
@@ -356,7 +380,9 @@ float NURBS::getRadius(const float& t) const
 {
 	float r = 1.0f / this->getCurvature(t);
 
-	std::cout << "r = " << r << std::endl;
+	//std::cout << "r = " << r << std::endl;
+	if (r == INFINITY)
+		return 0.0f;
 
 	return r;
 }

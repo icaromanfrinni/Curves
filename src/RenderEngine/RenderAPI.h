@@ -142,7 +142,7 @@ namespace CRAB
 
         // draw the tangent vector
         // -----------------------
-        std::vector<Mesh::Vertex> tangents;
+        //std::vector<Mesh::Vertex> tangents;
         //// B-splines
         //tangents.clear();
         //for (int i = 0; i <= STEPS; i++)
@@ -175,26 +175,10 @@ namespace CRAB
         //    tangents.push_back(v);
         //}
         //ourMesh_List.push_back(Mesh(tangents));
-        // NURBS
-        tangents.clear();
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head = tail + c3.getTangent(t);
-            Mesh::Vertex v;
-            v.Color = { 1.0f, 0.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            tangents.push_back(v);
-            v.Color = { 0.5f, 0.0f, 1.0f };
-            v.Position = { head.x, head.y, head.z };
-            tangents.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(tangents));
 
         // draw the normal vector
         // ----------------------
-        std::vector<Mesh::Vertex> normals;
+        //std::vector<Mesh::Vertex> normals;
         //// B-splines
         //normals.clear();
         //for (int i = 0; i <= STEPS; i++)
@@ -228,21 +212,53 @@ namespace CRAB
         //}
         //ourMesh_List.push_back(Mesh(normals));
         // NURBS
-        normals.clear();
+        std::vector<Mesh::Vertex> nurbs_vector;
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
+
+            if (c3.isClockwise(t))
+                std::cout << "RIGHT" << std::endl;
+            else std::cout << "LEFT" << std::endl;
+            
             CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head = tail + c3.getNormal(t);// *c3.getRadius(t);
+            CRAB::Vector4Df head = tail + c3.getTangent(t);
             Mesh::Vertex v;
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
-            normals.push_back(v);
+            nurbs_vector.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
+
+            // normal
+            head = tail + c3.getNormal(t);// *c3.getRadius(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
             v.Color = { 0.5f, 1.0f, 0.5f };
             v.Position = { head.x, head.y, head.z };
-            normals.push_back(v);
+            nurbs_vector.push_back(v);
+
+            // normal up
+            head = tail + c3.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
+
+            // binormal
+            /*head = tail + c3.getBinormal(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 0.5f, 1.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);*/
         }
-        ourMesh_List.push_back(Mesh(normals));
+        ourMesh_List.push_back(Mesh(nurbs_vector));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

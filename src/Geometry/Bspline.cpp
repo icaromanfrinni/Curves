@@ -160,10 +160,10 @@ CRAB::Vector4Df Bspline::getTangent(const float& t) const
 // ------------------------
 CRAB::Vector4Df Bspline::getNormal(const float& t) const
 {
-	CRAB::Vector4Df deriv = this->deriv(t).to_unitary();
-	CRAB::Vector4Df deriv2 = this->deriv2(t).to_unitary();
-	CRAB::Vector4Df normal = deriv2 - deriv * (dot(deriv2, deriv) / deriv.lengthsq());
-	return normal.to_unitary();
+	CRAB::Vector4Df d1 = this->deriv(t);
+	CRAB::Vector4Df d2 = this->deriv2(t);
+	CRAB::Vector4Df n = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
+	return n.to_unitary();
 }
 
 // RETURNS THE CURVE NORMAL UP (Yaw vector)
