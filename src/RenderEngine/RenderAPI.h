@@ -140,6 +140,10 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(c3));
         ourMesh_List.push_back(Mesh(c3.points));
 
+        glmNURBS c4;
+        ourMesh_List.push_back(Mesh(c4));
+        ourMesh_List.push_back(Mesh(c4.points));
+
         // draw the tangent vector
         // -----------------------
         //std::vector<Mesh::Vertex> tangents;
@@ -216,14 +220,16 @@ namespace CRAB
         for (int i = 0; i <= STEPS; i++)
         {
             float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c3.getPosition(t);
+            CRAB::Vector4Df head;
+            Mesh::Vertex v;
 
             if (c3.isClockwise(t))
                 std::cout << "RIGHT" << std::endl;
             else std::cout << "LEFT" << std::endl;
             
-            CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head = tail + c3.getTangent(t);
-            Mesh::Vertex v;
+            // tangent
+            head = tail + c3.getTangent(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
             nurbs_vector.push_back(v);
@@ -232,7 +238,7 @@ namespace CRAB
             nurbs_vector.push_back(v);
 
             // normal
-            head = tail + c3.getNormal(t);// *c3.getRadius(t);
+            head = tail + c3.getNormal(t) * c3.getRadius(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
             nurbs_vector.push_back(v);
@@ -250,15 +256,74 @@ namespace CRAB
             nurbs_vector.push_back(v);
 
             // binormal
-            /*head = tail + c3.getBinormal(t);
+            head = tail + c3.getBinormal(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = { tail.x, tail.y, tail.z };
             nurbs_vector.push_back(v);
             v.Color = { 0.5f, 1.0f, 1.0f };
             v.Position = { head.x, head.y, head.z };
-            nurbs_vector.push_back(v);*/
+            nurbs_vector.push_back(v);
         }
         ourMesh_List.push_back(Mesh(nurbs_vector));
+
+        // glmNURBS
+        std::vector<Mesh::Vertex> glmNurbs_vector;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            glm::vec3 tail = c4.getPosition(t);
+            glm::vec3 head;
+            Mesh::Vertex v;
+
+            if (c4.isClockwise(t))
+                std::cout << "RIGHT" << std::endl;
+            else std::cout << "LEFT" << std::endl;
+            
+            // tangent
+            head = tail + c4.getTangent(t);
+
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            glmNurbs_vector.push_back(v);
+
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = head;
+            glmNurbs_vector.push_back(v);
+
+            // normal
+            head = tail + c4.getNormal(t) * c3.getRadius(t);
+
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            glmNurbs_vector.push_back(v);
+
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = head;
+            glmNurbs_vector.push_back(v);
+
+            // normal up
+            head = tail + c4.getNormalUp(t);
+
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            glmNurbs_vector.push_back(v);
+
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = head;
+            glmNurbs_vector.push_back(v);
+
+            // binormal
+            head = tail + c4.getBinormal(t);
+
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            glmNurbs_vector.push_back(v);
+
+            v.Color = { 0.5f, 1.0f, 1.0f };
+            v.Position = head;
+            glmNurbs_vector.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(glmNurbs_vector));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

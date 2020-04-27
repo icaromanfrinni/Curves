@@ -66,6 +66,24 @@ Mesh::Mesh(const NURBS& curve)
 
     setupMesh();
 }
+// overload constructor (from glmNURBS curve)
+Mesh::Mesh(const glmNURBS& curve)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = false;
+
+    Mesh::Vertex v;
+    v.Color = { 1.0f, 0.0f, 1.0f };
+
+    for (int i = 0; i <= STEPS; i++)
+    {
+        float t = float(i) / STEPS;
+        v.Position = curve.getPosition(t);
+        this->vertices.push_back(v);
+    }
+
+    setupMesh();
+}
 // overload constructor (from Control points)
 Mesh::Mesh(const std::vector<CRAB::Vector4Df> &points)
 {
@@ -78,6 +96,23 @@ Mesh::Mesh(const std::vector<CRAB::Vector4Df> &points)
     for (int i = 0; i < points.size(); i++)
     {
         v.Position = { points[i].x, points[i].y, points[i].z };
+        this->vertices.push_back(v);
+    }
+
+    setupMesh();
+}
+// overload constructor (from glm::Control points)
+Mesh::Mesh(const std::vector<glm::vec3>& points)
+{
+    this->primitive_type = GL_LINE_STRIP;
+    this->with_points = true;
+
+    Mesh::Vertex v;
+    v.Color = { 0.2f, 0.2f, 0.2f };
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        v.Position = points[i];
         this->vertices.push_back(v);
     }
 

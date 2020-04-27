@@ -18,6 +18,7 @@
 #include "Bezier.h"
 #include "Bspline.h"
 #include "NURBS.h"
+#include "glmNURBS.h"
 
 #define STEPS 10
 
@@ -45,8 +46,12 @@ public:
     Mesh(const Bspline& curve);
     // overload constructor (from NURBS curve)
     Mesh(const NURBS& curve);
+    // overload constructor (from glmNURBS curve)
+    Mesh(const glmNURBS& curve);
     // overload constructor (from Control points)
     Mesh(const std::vector<CRAB::Vector4Df> &points);
+    // overload constructor (from glm::Control points)
+    Mesh(const std::vector<glm::vec3>& points);
 	// destructor
 	~Mesh();
 

@@ -8,9 +8,9 @@ NURBS::NURBS()
 {
 	// control points
 	//this->points.push_back({ 0.0f, -10.0f, 0.0f, 1.0f });
-	/*this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 5.0f, 0.0f, 1.0f });
-	this->points.push_back({ 5.0f, 5.0f, 0.0f, 1.0f });*/
+	this->points.push_back({ 0.0f, 0.0f, 2.0f, 1.0f });
+	this->points.push_back({ 0.0f, 5.0f, 2.0f, 1.0f });
+	this->points.push_back({ 5.0f, 5.0f, 2.0f, 1.0f });
 	//this->points.push_back({ 15.0f, 5.0f, 0.0f, 1.0f });
 
 	/*this->points.push_back({ -10.0f, 0.0f, 0.0f, 1.0f });
@@ -19,29 +19,29 @@ NURBS::NURBS()
 	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
 	this->points.push_back({ 10.0f, 0.0f, -10.0f, 1.0f });*/
 
-	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
+	/*this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
 	this->points.push_back({ 5.0f, 0.0f, 0.0f, 1.0f });
 	this->points.push_back({ 5.0f, 10.0f, 0.0f, 1.0f });
 	this->points.push_back({ 0.0f, 10.0f, 0.0f, 1.0f });
 	this->points.push_back({ -5.0f, 10.0f, 0.0f, 1.0f });
 	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });*/
 
 	// weights
-	//this->w = { 1.0f, 1.0f, 1.0f };
+	this->w = { 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, sinf(M_PI / 4.0f), 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, sinf(M_PI / 4.0f), 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
 
 	// degree
-	this->p = 2;
-	//this->p = this->points.size() - 1;
+	//this->p = 2;
+	this->p = this->points.size() - 1;
 
 	// knot vector
-	/*int m = points.size() + this->p;
+	int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
@@ -54,9 +54,9 @@ NURBS::NURBS()
 			float u = float(i - p) / float(n - p + 1);
 			this->T.push_back(u);
 		}
-	}*/
+	}
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
-	this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
 }
 // OVERLOAD CONSTRUCTOR
 // --------------------
@@ -173,10 +173,10 @@ float NURBS::dN(const int& i, const int& p, const float& t) const
 float NURBS::dN2(const int& i, const int& p, const float& t) const
 {
 	float left = this->dN(i, p - 1, t) * p / (this->T[i + p] - this->T[i]);
-	if (isnan(left)) left = 0.0f;
+	if (isnan(left) || isinf(left)) left = 0.0f;
 
 	float right = this->dN(i + 1, p - 1, t) * p / (this->T[i + p + 1] - this->T[i + 1]);
-	if (isnan(right)) right = 0.0f;
+	if (isnan(right) || isinf(right)) right = 0.0f;
 
 	return left - right;
 }
@@ -337,6 +337,10 @@ CRAB::Vector4Df NURBS::getNormal(const float& t) const
 	CRAB::Vector4Df d1 = this->deriv(t);
 	CRAB::Vector4Df d2 = this->deriv2(t);
 	CRAB::Vector4Df n = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
+
+	/*std::cout << "\nNURBS" << std::endl;
+	std::cout << "d1.length() = " << d1.length() << std::endl;
+	std::cout << "d2.length() = " << d2.length() << std::endl;*/
 
 	/*CRAB::Vector4Df result = n.to_unitary();
 	std::cout << "normal = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;
