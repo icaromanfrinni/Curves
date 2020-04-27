@@ -6,18 +6,19 @@
 // -------------------
 glmNURBS::glmNURBS()
 {
-	// control points
-	//this->points.push_back({ 0.0f, -10.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 0.0f, 0.0f });
-	this->points.push_back({ 0.0f, 5.0f, 0.0f });
-	this->points.push_back({ 5.0f, 5.0f, 0.0f });
-	//this->points.push_back({ 15.0f, 5.0f, 0.0f, 1.0f });
+	// ARC
+	/*this->points.push_back({ 10.0f, 0.0f, 0.0f });
+	this->points.push_back({ 10.0f, 10.0f, 0.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f });*/
 
-	/*this->points.push_back({ -10.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ -5.0f, 0.0f, 5.0f, 1.0f });
-	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
-	this->points.push_back({ 10.0f, 0.0f, -10.0f, 1.0f });*/
+	/*this->points.push_back({ 0.0f, 0.0f, 0.0f });
+	this->points.push_back({ 0.0f, 5.0f, 0.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f });
+	this->points.push_back({ 5.0f, 10.0f, 0.0f });
+	this->points.push_back({ 10.0f, 10.0f, 0.0f });
+	this->points.push_back({ 15.0f, 10.0f, 0.0f });
+	this->points.push_back({ 15.0f, 15.0f, 0.0f });
+	this->points.push_back({ 15.0f, 20.0f, 0.0f });*/
 
 	/*this->points.push_back({ 0.0f, 0.0f, 0.0f });
 	this->points.push_back({ 5.0f, 0.0f, 0.0f });
@@ -27,21 +28,46 @@ glmNURBS::glmNURBS()
 	this->points.push_back({ -5.0f, 0.0f, 0.0f });
 	this->points.push_back({ 0.0f, 0.0f, 0.0f });*/
 
+	/*this->points.push_back({ 0.0f, 10.0f, 0.0f });
+	this->points.push_back({ 5.0f, 10.0f, 0.0f });
+	this->points.push_back({ 5.0f, 10.0f, 5.0f });*/
+
+	// TESTE DE CURVA VERTICAL
+	
+	this->points.push_back({ 0.0f, 0.0f, 0.0f });
+	this->points.push_back({ 5.0f, 0.0f, 0.0f });
+	this->points.push_back({ 7.5f, 4.3301f, 0.0f });
+	this->points.push_back({ 8.75f, 6.4952f, 0.0f });
+	this->points.push_back({ 10.0f, 8.6603f, 0.0f });
+	this->points.push_back({ 12.5f, 12.9904f, 0.0f });
+	this->points.push_back({ 17.5f, 12.9904f, 0.0f });
+
 	// weights
+	/*for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);*/
+
 	//this->w = { 1.0f, 1.0f, 1.0f };
-	this->w = { 1.0f, sinf(3.14159f / 4.0f), 1.0f };
+	//this->w = { 1.0f, 1.0f, 2.0f };
+	//this->w = { 1.0f, h, 1.0f };
+	//this->w = { 1.0f, sinf(3.14159f / 4.0f), 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, sinf(3.14159f / 4.0f) / 2.0f, sinf(3.14159f / 4.0f) / 2.0f, 1.0f };
+	//this->w = { 1.0f, 0.7f, 1.0f, 0.7f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	//this->w = { 1.0f, 1.0f, sinf(M_PI / 4.0f), 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, sinf(3.14159f / 4.0f), 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	this->w = { 1.0f, sqrtf(3.0f) / 2.0f, 1.0f, 1.0f, 1.0f, sqrtf(3.0f) / 2.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// degree
-	//this->p = 2;
-	this->p = this->points.size() - 1;
+	this->p = 2;
+	//this->p = this->points.size() - 1;
 
 	// knot vector
-	int m = points.size() + this->p;
+	/*int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
@@ -54,9 +80,12 @@ glmNURBS::glmNURBS()
 			float u = float(i - p) / float(n - p + 1);
 			this->T.push_back(u);
 		}
-	}
+	}*/
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
-	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.75f, 1.0f, 1.0f, 1.0f };
+	this->T = { 0.0f, 0.0f, 0.0f, 0.392f, 0.392f, 0.608f, 0.608f, 1.0f, 1.0f, 1.0f };
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f };
 }
 
 // DESTRUCTOR
@@ -111,6 +140,11 @@ float glmNURBS::dN2(const int& i, const int& p, const float& t) const
 // -----------
 glm::vec3 glmNURBS::deriv(const float& t) const
 {
+	//std::cout << "\nDERIV 1" << std::endl;
+
+	/*if (this->p <= 1)
+		return glm::vec3(0.0f);*/
+
 	int span = this->FindSpan(t);
 
 	glm::vec3 A = { 0.0f, 0.0f, 0.0f };
@@ -145,6 +179,11 @@ glm::vec3 glmNURBS::deriv(const float& t) const
 }
 glm::vec3 glmNURBS::deriv2(const float& t) const
 {
+	//std::cout << "\nDERIV 2" << std::endl;
+
+	/*if (this->p <= 2)
+		return glm::vec3(0.0f);*/
+
 	int span = this->FindSpan(t);
 
 	glm::vec3 A = { 0.0f, 0.0f, 0.0f };
@@ -152,6 +191,13 @@ glm::vec3 glmNURBS::deriv2(const float& t) const
 	{
 		int index = span - this->p + i;
 		A += (this->points[index] * this->w[index]) * this->N(index, this->p, t);
+	}
+
+	glm::vec3 derivA = { 0.0f, 0.0f, 0.0f };
+	for (int i = 0; i <= this->p; i++)
+	{
+		int index = span - this->p + i;
+		derivA += (this->points[index] * this->w[index]) * this->dN(index, this->p, t);
 	}
 
 	glm::vec3 derivA2 = { 0.0f, 0.0f, 0.0f };
@@ -181,15 +227,19 @@ glm::vec3 glmNURBS::deriv2(const float& t) const
 		int index = span - this->p + j;
 		derivD2 += this->w[index] * this->dN2(index, this->p, t);
 
-		std::cout << "index = " << index << std::endl;
-		std::cout << "dN2 = " << this->dN2(index, this->p, t) << std::endl;
+		/*std::cout << "index = " << index << std::endl;
+		std::cout << "dN2 = " << this->dN2(index, this->p, t) << std::endl;*/
 	}
 
-	std::cout << "D = " << D << std::endl;
-	std::cout << "derivD = " << derivD << std::endl;
-	std::cout << "derivD2 = " << derivD2 << std::endl;
+	/*std::cout << "A = [" << A.x << "; " << A.y << "; " << A.z << "]" << std::endl;
+	std::cout << "derivA2 = [" << derivA2.x << "; " << derivA2.y << "; " << derivA2.z << "]" << std::endl;*/
 
-	return ((derivA2 * D - A * derivD2) * (powf(D, 2.0f) - 2.0f * derivD)) / powf(D, 4.0f);
+	/*std::cout << "D = " << D << std::endl;
+	std::cout << "derivD = " << derivD << std::endl;
+	std::cout << "derivD2 = " << derivD2 << std::endl;*/
+
+	//return (((derivA2 * D) - (A * derivD2)) * (powf(D, 2.0f) - 2.0f * derivD)) / powf(D, 4.0f);
+	return (((derivA2 * D) - (A * derivD2)) * D - ((derivA * D) - (A * derivD)) * 2.0f) / powf(D, 3.0f);
 }
 
 // FIND THE ith KNOT SPAN
@@ -267,17 +317,22 @@ glm::vec3 glmNURBS::getTangent(const float& t) const
 // ------------------------
 glm::vec3 glmNURBS::getNormal(const float& t) const
 {
+	//std::cout << "\tt = " << t << std::endl;
+
 	glm::vec3 d1 = this->deriv(t);
 	glm::vec3 d2 = this->deriv2(t);
 	glm::vec3 n = d2 - d1 * (glm::dot(d2, d1) / powf(glm::length(d1), 2.0f));
 
-	std::cout << "\nglm::NURBS" << std::endl;
-	std::cout << "glm::length(d1) = " << glm::length(d1) << std::endl;
-	std::cout << "glm::length(d2) = " << glm::length(d2) << std::endl;
+	//std::cout << "d1 = [" << d1.x << "; " << d1.y << "; " << d1.z << "]" << std::endl;
+	//std::cout << "d2 = [" << d2.x << "; " << d2.y << "; " << d2.z << "]" << std::endl;
 
-	/*glm::vec3 result = n.to_unitary();
-	std::cout << "normal = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;
-	return result;*/
+	/*std::cout << "\nglm::NURBS" << std::endl;
+	std::cout << "glm::length(d1) = " << glm::length(d1) << std::endl;
+	std::cout << "glm::length(d2) = " << glm::length(d2) << std::endl;*/
+
+	//glm::vec3 result = glm::normalize(n);
+	//std::cout << "normal = [" << result.x << "; " << result.y << "; " << result.z << "]\n" << std::endl;
+	//return result;
 
 	return glm::normalize(n);
 }
@@ -314,7 +369,7 @@ float glmNURBS::getCurvature(const float& t) const
 {
 	glm::vec3 d1 = this->deriv(t);
 	glm::vec3 d2 = this->deriv2(t);
-	float k = cross(d1, d2).length() / powf(d1.length(), 3.0f);
+	float k = glm::length(glm::cross(d1, d2)) / powf(glm::length(d1), 3.0f);
 
 	return k;
 }
@@ -325,8 +380,8 @@ float glmNURBS::getRadius(const float& t) const
 {
 	float r = 1.0f / this->getCurvature(t);
 
-	//std::cout << "r = " << r << std::endl;
-	if (r == INFINITY)
+	std::cout << "glm::R = " << r << std::endl;
+	if (isinf(r))
 		return 0.0f;
 
 	return r;

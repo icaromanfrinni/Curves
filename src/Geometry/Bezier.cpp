@@ -4,9 +4,9 @@
 // -------------------
 Bezier::Bezier()
 {
-	this->points.push_back(CRAB::Vector4Df{ -5.0f, 0.0f, -1.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 5.0f, -1.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 5.0f, 0.0f, -1.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 2.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 10.0f, 10.0f, 2.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 10.0f, 2.0f, 1.0f });
 }
 
 // DESTRUCTOR
@@ -75,7 +75,10 @@ CRAB::Vector4Df Bezier::getTangent(const float& t) const
 // ------------------------
 CRAB::Vector4Df Bezier::getNormal(const float& t) const
 {
-	CRAB::Vector4Df k = deriv2(t) - deriv(t) * (dot(deriv2(t), deriv(t)) / deriv(t).lengthsq());
+	CRAB::Vector4Df d1 = deriv(t);
+	CRAB::Vector4Df d2 = deriv2(t);
+
+	CRAB::Vector4Df k = d2 - d1 * (dot(d2, d1) / d1.lengthsq());
 	return k.to_unitary();
 }
 // RETURNS THE CURVE NORMAL UP (Yaw vector)

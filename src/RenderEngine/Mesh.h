@@ -20,7 +20,7 @@
 #include "NURBS.h"
 #include "glmNURBS.h"
 
-#define STEPS 10
+#define STEPS 100
 
 class Mesh
 {

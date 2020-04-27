@@ -108,7 +108,7 @@ Mesh::Mesh(const std::vector<glm::vec3>& points)
     this->with_points = true;
 
     Mesh::Vertex v;
-    v.Color = { 0.2f, 0.2f, 0.2f };
+    v.Color = { 0.8f, 0.8f, 0.8f };
 
     for (int i = 0; i < points.size(); i++)
     {

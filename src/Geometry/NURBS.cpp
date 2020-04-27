@@ -7,11 +7,11 @@
 NURBS::NURBS()
 {
 	// control points
-	//this->points.push_back({ 0.0f, -10.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 0.0f, 2.0f, 1.0f });
-	this->points.push_back({ 0.0f, 5.0f, 2.0f, 1.0f });
-	this->points.push_back({ 5.0f, 5.0f, 2.0f, 1.0f });
-	//this->points.push_back({ 15.0f, 5.0f, 0.0f, 1.0f });
+	/*this->points.push_back({ 0.0f, -10.0f, 5.0f, 1.0f });
+	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
+	this->points.push_back({ 0.0f, 5.0f, 5.0f, 1.0f });
+	this->points.push_back({ 5.0f, 5.0f, 5.0f, 1.0f });
+	this->points.push_back({ 15.0f, 5.0f, 5.0f, 1.0f });*/
 
 	/*this->points.push_back({ -10.0f, 0.0f, 0.0f, 1.0f });
 	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
@@ -19,29 +19,29 @@ NURBS::NURBS()
 	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
 	this->points.push_back({ 10.0f, 0.0f, -10.0f, 1.0f });*/
 
-	/*this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 5.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 5.0f, 10.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 10.0f, 0.0f, 1.0f });
-	this->points.push_back({ -5.0f, 10.0f, 0.0f, 1.0f });
-	this->points.push_back({ -5.0f, 0.0f, 0.0f, 1.0f });
-	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });*/
+	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
+	this->points.push_back({ 5.0f, 0.0f, 5.0f, 1.0f });
+	this->points.push_back({ 5.0f, 10.0f, 5.0f, 1.0f });
+	this->points.push_back({ 0.0f, 10.0f, 5.0f, 1.0f });
+	this->points.push_back({ -5.0f, 10.0f, 5.0f, 1.0f });
+	this->points.push_back({ -5.0f, 0.0f, 5.0f, 1.0f });
+	this->points.push_back({ 0.0f, 0.0f, 5.0f, 1.0f });
 
 	// weights
-	this->w = { 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, sinf(M_PI / 4.0f), 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, sinf(M_PI / 4.0f), 1.0f, 1.0f };
-	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
 
 	// degree
-	//this->p = 2;
-	this->p = this->points.size() - 1;
+	this->p = 2;
+	//this->p = this->points.size() - 1;
 
 	// knot vector
-	int m = points.size() + this->p;
+	/*int m = points.size() + this->p;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
@@ -54,9 +54,9 @@ NURBS::NURBS()
 			float u = float(i - p) / float(n - p + 1);
 			this->T.push_back(u);
 		}
-	}
+	}*/
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
-	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
+	this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.5f, 0.75f, 1.0f, 1.0f , 1.0f };
 }
 // OVERLOAD CONSTRUCTOR
 // --------------------
@@ -384,7 +384,7 @@ float NURBS::getRadius(const float& t) const
 {
 	float r = 1.0f / this->getCurvature(t);
 
-	//std::cout << "r = " << r << std::endl;
+	std::cout << "R = " << r << std::endl;
 	if (r == INFINITY)
 		return 0.0f;
 

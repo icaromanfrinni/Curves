@@ -130,141 +130,114 @@ namespace CRAB
         // -----------
         /*Bspline c1;
         ourMesh_List.push_back(Mesh(c1));
-        ourMesh_List.push_back(Mesh(c1.points));
+        ourMesh_List.push_back(Mesh(c1.points));*/
 
-        Bezier c2;
+        /*Bezier c2;
         ourMesh_List.push_back(Mesh(c2));
         ourMesh_List.push_back(Mesh(c2.points));*/
 
-        NURBS c3;
+        /*NURBS c3;
         ourMesh_List.push_back(Mesh(c3));
-        ourMesh_List.push_back(Mesh(c3.points));
+        ourMesh_List.push_back(Mesh(c3.points));*/
 
         glmNURBS c4;
         ourMesh_List.push_back(Mesh(c4));
         ourMesh_List.push_back(Mesh(c4.points));
 
-        // draw the tangent vector
-        // -----------------------
-        //std::vector<Mesh::Vertex> tangents;
-        //// B-splines
-        //tangents.clear();
-        //for (int i = 0; i <= STEPS; i++)
-        //{
-        //    float t = float(i) / STEPS;
-        //    CRAB::Vector4Df tail = c1.getPosition(t);
-        //    CRAB::Vector4Df head = tail + c1.getTangent(t);
-        //    Mesh::Vertex v;
-        //    v.Color = { 1.0f, 1.0f, 0.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    tangents.push_back(v);
-        //    v.Color = { 0.5f, 0.5f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    tangents.push_back(v);
-        //}
-        //ourMesh_List.push_back(Mesh(tangents));
-        //// Bezier
-        //tangents.clear();
+        // Bezier
+        //std::vector<Mesh::Vertex> bezier_vector;
         //for (int i = 0; i <= STEPS; i++)
         //{
         //    float t = float(i) / STEPS;
         //    CRAB::Vector4Df tail = c2.getPosition(t);
-        //    CRAB::Vector4Df head = tail + c2.getTangent(t);
+        //    CRAB::Vector4Df head;
         //    Mesh::Vertex v;
-        //    v.Color = { 1.0f, 1.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    tangents.push_back(v);
-        //    v.Color = { 0.5f, 0.5f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    tangents.push_back(v);
-        //}
-        //ourMesh_List.push_back(Mesh(tangents));
 
-        // draw the normal vector
-        // ----------------------
-        //std::vector<Mesh::Vertex> normals;
-        //// B-splines
-        //normals.clear();
-        //for (int i = 0; i <= STEPS; i++)
-        //{
-        //    float t = float(i) / STEPS;
-        //    CRAB::Vector4Df tail = c1.getPosition(t);
-        //    CRAB::Vector4Df head = tail + c1.getNormal(t) * c1.getRadius(t);
-        //    Mesh::Vertex v;
-        //    v.Color = { 1.0f, 1.0f, 0.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    normals.push_back(v);
-        //    v.Color = { 0.5f, 1.0f, 0.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    normals.push_back(v);
-        //}
-        //ourMesh_List.push_back(Mesh(normals));
-        //// Bezier
-        //normals.clear();
-        //for (int i = 0; i <= STEPS; i++)
-        //{
-        //    float t = float(i) / STEPS;
-        //    CRAB::Vector4Df tail = c2.getPosition(t);
-        //    CRAB::Vector4Df head = tail + c2.getNormal(t) * c2.getRadius(t);
-        //    Mesh::Vertex v;
+        //    // tangent
+        //    /*head = tail + c2.getTangent(t);
+        //    
         //    v.Color = { 1.0f, 1.0f, 1.0f };
         //    v.Position = { tail.x, tail.y, tail.z };
-        //    normals.push_back(v);
+        //    bezier_vector.push_back(v);
+
+        //    v.Color = { 0.5f, 0.5f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    bezier_vector.push_back(v);*/
+
+        //    // normal
+        //    head = tail + c2.getNormal(t) * c2.getRadius(t);
+
+        //    v.Color = { 1.0f, 1.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    bezier_vector.push_back(v);
+
         //    v.Color = { 0.5f, 1.0f, 0.5f };
         //    v.Position = { head.x, head.y, head.z };
-        //    normals.push_back(v);
+        //    bezier_vector.push_back(v);
+
+        //    // binormal
+        //    /*head = tail + c2.getBinormal(t);
+
+        //    v.Color = { 1.0f, 1.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    bezier_vector.push_back(v);
+
+        //    v.Color = { 0.5f, 1.0f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    bezier_vector.push_back(v);*/
         //}
-        //ourMesh_List.push_back(Mesh(normals));
+        //ourMesh_List.push_back(Mesh(bezier_vector));
+
         // NURBS
-        std::vector<Mesh::Vertex> nurbs_vector;
-        for (int i = 0; i <= STEPS; i++)
-        {
-            float t = float(i) / STEPS;
-            CRAB::Vector4Df tail = c3.getPosition(t);
-            CRAB::Vector4Df head;
-            Mesh::Vertex v;
+        //std::vector<Mesh::Vertex> nurbs_vector;
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    CRAB::Vector4Df tail = c3.getPosition(t);
+        //    CRAB::Vector4Df head;
+        //    Mesh::Vertex v;
 
-            if (c3.isClockwise(t))
-                std::cout << "RIGHT" << std::endl;
-            else std::cout << "LEFT" << std::endl;
-            
-            // tangent
-            head = tail + c3.getTangent(t);
-            v.Color = { 1.0f, 0.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            nurbs_vector.push_back(v);
-            v.Color = { 0.5f, 0.0f, 1.0f };
-            v.Position = { head.x, head.y, head.z };
-            nurbs_vector.push_back(v);
+        //    /*if (c3.isClockwise(t))
+        //        std::cout << "RIGHT" << std::endl;
+        //    else std::cout << "LEFT" << std::endl;*/
+        //    
+        //    // tangent
+        //    head = tail + c3.getTangent(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    nurbs_vector.push_back(v);
+        //    v.Color = { 0.5f, 0.0f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    nurbs_vector.push_back(v);
 
-            // normal
-            head = tail + c3.getNormal(t) * c3.getRadius(t);
-            v.Color = { 1.0f, 0.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            nurbs_vector.push_back(v);
-            v.Color = { 0.5f, 1.0f, 0.5f };
-            v.Position = { head.x, head.y, head.z };
-            nurbs_vector.push_back(v);
+        //    // normal
+        //    head = tail + c3.getNormal(t) * c3.getRadius(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    nurbs_vector.push_back(v);
+        //    v.Color = { 0.5f, 1.0f, 0.5f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    nurbs_vector.push_back(v);
 
-            // normal up
-            head = tail + c3.getNormalUp(t);
-            v.Color = { 1.0f, 0.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            nurbs_vector.push_back(v);
-            v.Color = { 1.0f, 0.0f, 0.5f };
-            v.Position = { head.x, head.y, head.z };
-            nurbs_vector.push_back(v);
+        //    // normal up
+        //    head = tail + c3.getNormalUp(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    nurbs_vector.push_back(v);
+        //    v.Color = { 1.0f, 0.0f, 0.5f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    nurbs_vector.push_back(v);
 
-            // binormal
-            head = tail + c3.getBinormal(t);
-            v.Color = { 1.0f, 0.0f, 1.0f };
-            v.Position = { tail.x, tail.y, tail.z };
-            nurbs_vector.push_back(v);
-            v.Color = { 0.5f, 1.0f, 1.0f };
-            v.Position = { head.x, head.y, head.z };
-            nurbs_vector.push_back(v);
-        }
-        ourMesh_List.push_back(Mesh(nurbs_vector));
+        //    // binormal
+        //    head = tail + c3.getBinormal(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = { tail.x, tail.y, tail.z };
+        //    nurbs_vector.push_back(v);
+        //    v.Color = { 0.5f, 1.0f, 1.0f };
+        //    v.Position = { head.x, head.y, head.z };
+        //    nurbs_vector.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(nurbs_vector));
 
         // glmNURBS
         std::vector<Mesh::Vertex> glmNurbs_vector;
@@ -275,12 +248,12 @@ namespace CRAB
             glm::vec3 head;
             Mesh::Vertex v;
 
-            if (c4.isClockwise(t))
+            /*if (c4.isClockwise(t))
                 std::cout << "RIGHT" << std::endl;
-            else std::cout << "LEFT" << std::endl;
+            else std::cout << "LEFT" << std::endl;*/
             
             // tangent
-            head = tail + c4.getTangent(t);
+            /*head = tail + c4.getTangent(t);
 
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
@@ -288,10 +261,10 @@ namespace CRAB
 
             v.Color = { 0.5f, 0.0f, 1.0f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);
+            glmNurbs_vector.push_back(v);*/
 
             // normal
-            head = tail + c4.getNormal(t) * c3.getRadius(t);
+            head = tail + c4.getNormal(t) * c4.getRadius(t);
 
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
@@ -302,7 +275,7 @@ namespace CRAB
             glmNurbs_vector.push_back(v);
 
             // normal up
-            head = tail + c4.getNormalUp(t);
+            /*head = tail + c4.getNormalUp(t);
 
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
@@ -310,10 +283,10 @@ namespace CRAB
 
             v.Color = { 1.0f, 0.0f, 0.5f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);
+            glmNurbs_vector.push_back(v);*/
 
             // binormal
-            head = tail + c4.getBinormal(t);
+            /*head = tail + c4.getBinormal(t);
 
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
@@ -321,7 +294,7 @@ namespace CRAB
 
             v.Color = { 0.5f, 1.0f, 1.0f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);
+            glmNurbs_vector.push_back(v);*/
         }
         ourMesh_List.push_back(Mesh(glmNurbs_vector));
 
