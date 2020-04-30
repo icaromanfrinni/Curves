@@ -16,7 +16,12 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Mesh.h"
+
 #include "Primitives.h"
+#include "Line.h"
+#include "CircularArc.h"
+
+#define DEBUG 0
 
 namespace CRAB
 {
@@ -128,116 +133,113 @@ namespace CRAB
 
         // load curves
         // -----------
-        /*Bspline c1;
+
+#if DEBUG == 1
+
+        Bspline c1;
         ourMesh_List.push_back(Mesh(c1));
-        ourMesh_List.push_back(Mesh(c1.points));*/
+        ourMesh_List.push_back(Mesh(c1.points));
 
-        /*Bezier c2;
+        Bezier c2;
         ourMesh_List.push_back(Mesh(c2));
-        ourMesh_List.push_back(Mesh(c2.points));*/
+        ourMesh_List.push_back(Mesh(c2.points));
 
-        /*NURBS c3;
+        NURBS c3;
         ourMesh_List.push_back(Mesh(c3));
-        ourMesh_List.push_back(Mesh(c3.points));*/
+        ourMesh_List.push_back(Mesh(c3.points));
 
         glmNURBS c4;
         ourMesh_List.push_back(Mesh(c4));
         ourMesh_List.push_back(Mesh(c4.points));
 
-        // Bezier
-        //std::vector<Mesh::Vertex> bezier_vector;
-        //for (int i = 0; i <= STEPS; i++)
-        //{
-        //    float t = float(i) / STEPS;
-        //    CRAB::Vector4Df tail = c2.getPosition(t);
-        //    CRAB::Vector4Df head;
-        //    Mesh::Vertex v;
+         Bezier
+        std::vector<Mesh::Vertex> bezier_vector;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c2.getPosition(t);
+            CRAB::Vector4Df head;
+            Mesh::Vertex v;
 
-        //    // tangent
-        //    /*head = tail + c2.getTangent(t);
-        //    
-        //    v.Color = { 1.0f, 1.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    bezier_vector.push_back(v);
+            // tangent
+            head = tail + c2.getTangent(t);
+            v.Color = { 1.0f, 1.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            bezier_vector.push_back(v);
+            v.Color = { 0.5f, 0.5f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            bezier_vector.push_back(v);
 
-        //    v.Color = { 0.5f, 0.5f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    bezier_vector.push_back(v);*/
+            // normal
+            head = tail + c2.getNormal(t) * c2.getRadius(t);
+            v.Color = { 1.0f, 1.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            bezier_vector.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = { head.x, head.y, head.z };
+            bezier_vector.push_back(v);
 
-        //    // normal
-        //    head = tail + c2.getNormal(t) * c2.getRadius(t);
-
-        //    v.Color = { 1.0f, 1.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    bezier_vector.push_back(v);
-
-        //    v.Color = { 0.5f, 1.0f, 0.5f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    bezier_vector.push_back(v);
-
-        //    // binormal
-        //    /*head = tail + c2.getBinormal(t);
-
-        //    v.Color = { 1.0f, 1.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    bezier_vector.push_back(v);
-
-        //    v.Color = { 0.5f, 1.0f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    bezier_vector.push_back(v);*/
-        //}
-        //ourMesh_List.push_back(Mesh(bezier_vector));
+            // binormal
+            head = tail + c2.getBinormal(t);
+            v.Color = { 1.0f, 1.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            bezier_vector.push_back(v);
+            v.Color = { 0.5f, 1.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            bezier_vector.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(bezier_vector));
 
         // NURBS
-        //std::vector<Mesh::Vertex> nurbs_vector;
-        //for (int i = 0; i <= STEPS; i++)
-        //{
-        //    float t = float(i) / STEPS;
-        //    CRAB::Vector4Df tail = c3.getPosition(t);
-        //    CRAB::Vector4Df head;
-        //    Mesh::Vertex v;
+        std::vector<Mesh::Vertex> nurbs_vector;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            CRAB::Vector4Df tail = c3.getPosition(t);
+            CRAB::Vector4Df head;
+            Mesh::Vertex v;
 
-        //    /*if (c3.isClockwise(t))
-        //        std::cout << "RIGHT" << std::endl;
-        //    else std::cout << "LEFT" << std::endl;*/
-        //    
-        //    // tangent
-        //    head = tail + c3.getTangent(t);
-        //    v.Color = { 1.0f, 0.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    nurbs_vector.push_back(v);
-        //    v.Color = { 0.5f, 0.0f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    nurbs_vector.push_back(v);
+            if (c3.isClockwise(t))
+                std::cout << "RIGHT" << std::endl;
+            else std::cout << "LEFT" << std::endl;
+            
+            // tangent
+            head = tail + c3.getTangent(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
 
-        //    // normal
-        //    head = tail + c3.getNormal(t) * c3.getRadius(t);
-        //    v.Color = { 1.0f, 0.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    nurbs_vector.push_back(v);
-        //    v.Color = { 0.5f, 1.0f, 0.5f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    nurbs_vector.push_back(v);
+            // normal
+            head = tail + c3.getNormal(t) * c3.getRadius(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
 
-        //    // normal up
-        //    head = tail + c3.getNormalUp(t);
-        //    v.Color = { 1.0f, 0.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    nurbs_vector.push_back(v);
-        //    v.Color = { 1.0f, 0.0f, 0.5f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    nurbs_vector.push_back(v);
+            // normal up
+            head = tail + c3.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
 
-        //    // binormal
-        //    head = tail + c3.getBinormal(t);
-        //    v.Color = { 1.0f, 0.0f, 1.0f };
-        //    v.Position = { tail.x, tail.y, tail.z };
-        //    nurbs_vector.push_back(v);
-        //    v.Color = { 0.5f, 1.0f, 1.0f };
-        //    v.Position = { head.x, head.y, head.z };
-        //    nurbs_vector.push_back(v);
-        //}
-        //ourMesh_List.push_back(Mesh(nurbs_vector));
+            // binormal
+            head = tail + c3.getBinormal(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = { tail.x, tail.y, tail.z };
+            nurbs_vector.push_back(v);
+            v.Color = { 0.5f, 1.0f, 1.0f };
+            v.Position = { head.x, head.y, head.z };
+            nurbs_vector.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(nurbs_vector));
 
         // glmNURBS
         std::vector<Mesh::Vertex> glmNurbs_vector;
@@ -248,55 +250,210 @@ namespace CRAB
             glm::vec3 head;
             Mesh::Vertex v;
 
-            /*if (c4.isClockwise(t))
+            if (c4.isClockwise(t))
                 std::cout << "RIGHT" << std::endl;
-            else std::cout << "LEFT" << std::endl;*/
+            else std::cout << "LEFT" << std::endl;
             
             // tangent
-            /*head = tail + c4.getTangent(t);
-
+            head = tail + c4.getTangent(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
             glmNurbs_vector.push_back(v);
-
             v.Color = { 0.5f, 0.0f, 1.0f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);*/
+            glmNurbs_vector.push_back(v);
 
             // normal
-            head = tail + c4.getNormal(t) * c4.getRadius(t);
-
+            head = tail + c4.getNormal(t) *c4.getRadius(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
             glmNurbs_vector.push_back(v);
-
             v.Color = { 0.5f, 1.0f, 0.5f };
             v.Position = head;
             glmNurbs_vector.push_back(v);
 
             // normal up
-            /*head = tail + c4.getNormalUp(t);
-
+            head = tail + c4.getNormalUp(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
             glmNurbs_vector.push_back(v);
-
             v.Color = { 1.0f, 0.0f, 0.5f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);*/
+            glmNurbs_vector.push_back(v);
 
             // binormal
-            /*head = tail + c4.getBinormal(t);
-
+            head = tail + c4.getBinormal(t);
             v.Color = { 1.0f, 0.0f, 1.0f };
             v.Position = tail;
             glmNurbs_vector.push_back(v);
-
             v.Color = { 0.5f, 1.0f, 1.0f };
             v.Position = head;
-            glmNurbs_vector.push_back(v);*/
+            glmNurbs_vector.push_back(v);
         }
         ourMesh_List.push_back(Mesh(glmNurbs_vector));
+
+#endif
+
+        // load Alignments
+        // ---------------
+        
+        // *********************************
+        // ******* VIADUTO ANT SALES *******
+        // *********************************
+
+        /*std::vector<Segment*> grade;
+        grade.push_back(new Line(glm::vec3(0.0f, 1.259f, 0.0f), glm::vec3(20.0f, 1.129f, 0.0f)));
+        grade.push_back(new CircularArc(glm::vec3(20.0f, 1.129f, 0.0f), glm::vec3(39.82f, 1.00f, 0.0f), glm::vec3(60.0f, 2.259f, 0.0f)));
+        grade.push_back(new Line(glm::vec3(60.0f, 2.259f, 0.0f), glm::vec3(167.04f, 8.935f, 0.0f)));
+        grade.push_back(new CircularArc(glm::vec3(167.04f, 8.935f, 0.0f), glm::vec3(207.04f, 11.430f, 0.0f), glm::vec3(247.04f, 8.926f, 0.0f)));
+        grade.push_back(new Line(glm::vec3(247.04f, 8.926f, 0.0f), glm::vec3(320.0f, 4.359f, 0.0f)));
+        grade.push_back(new CircularArc(glm::vec3(320.0f, 4.359f, 0.0f), glm::vec3(350.0f, 2.481f, 0.0f), glm::vec3(380.0f, 3.429f, 0.0f)));
+        grade.push_back(new Line(glm::vec3(380.0f, 3.429f, 0.0f), glm::vec3(400.0f, 4.061f, 0.0f)));
+        
+        std::vector<Segment*> road;
+        road.push_back(new Line(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(22.44f, 0.0f, 50.44f)));
+        road.push_back(new CircularArc(glm::vec3(22.44f, 0.0f, 50.44f), glm::vec3(53.60f, 0.0f, 120.46f), glm::vec3(120.52f, 0.0f, 83.10f)));
+        road.push_back(new Line(glm::vec3(120.52f, 0.0f, 83.10f), glm::vec3(202.16f, 0.0f, 37.52f)));*/
+
+        // ***********************
+        // ******* EXEMPLO *******
+        // ***********************
+
+        std::vector<Segment*> grade;
+        grade.push_back(new Line(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(20.0f, 5.359f, 0.0f)));
+        grade.push_back(new CircularArc(glm::vec3(20.0f, 5.359f, 0.0f), glm::vec3(38.208f, 10.2378f, 0.0f), glm::vec3(56.416f, 5.359f, 0.0f)));
+        grade.push_back(new Line(glm::vec3(56.416f, 5.359f, 0.0f), glm::vec3(76.416f, 0.0f, 0.0f)));
+
+        std::vector<Segment*> road;
+        road.push_back(new Line(glm::vec3(0.0f, 0.0f, 25.0f), glm::vec3(20.0f, 0.0f, 25.0f)));
+        road.push_back(new CircularArc(glm::vec3(20.0f, 0.0f, 25.0f), glm::vec3(30.0f, 0.0f, 25.0f), glm::vec3(30.0f, 0.0f, 15.0f)));
+        road.push_back(new Line(glm::vec3(30.0f, 0.0f, 15.0f), glm::vec3(30.0f, 0.0f, 10.0f)));
+        road.push_back(new CircularArc(glm::vec3(30.0f, 0.0f, 10.0f), glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(40.0f, 0.0f, 0.0f)));
+        road.push_back(new Line(glm::vec3(40.0f, 0.0f, 0.0f), glm::vec3(60.0f, 0.0f, 0.0f)));
+
+        // ***********************
+
+        glmNURBS vertical(grade);
+        //ourMesh_List.push_back(Mesh(vertical));
+        //ourMesh_List.push_back(Mesh(vertical.points));
+
+        glmNURBS horizontal(road);
+        ourMesh_List.push_back(Mesh(horizontal));
+        ourMesh_List.push_back(Mesh(horizontal.points));
+
+        glmNURBS alignment(horizontal, vertical);
+        ourMesh_List.push_back(Mesh(alignment));
+
+        //std::vector<Mesh::Vertex> vertical_vectors;
+        //for (int i = 0; i <= STEPS; i++)
+        //{
+        //    float t = float(i) / STEPS;
+        //    glm::vec3 tail = vertical.getPosition(t);
+        //    glm::vec3 head;
+        //    Mesh::Vertex v;
+        //
+        //    // tangent
+        //    head = tail + vertical.getTangent(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = tail;
+        //    vertical_vectors.push_back(v);
+        //    v.Color = { 0.5f, 0.0f, 1.0f };
+        //    v.Position = head;
+        //    vertical_vectors.push_back(v);
+        //
+        //    // normal
+        //    head = tail + vertical.getNormal(t) * vertical.getRadius(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = tail;
+        //    vertical_vectors.push_back(v);
+        //    v.Color = { 0.5f, 1.0f, 0.5f };
+        //    v.Position = head;
+        //    vertical_vectors.push_back(v);
+        //
+        //    // normal up
+        //    head = tail + vertical.getNormalUp(t);
+        //    v.Color = { 1.0f, 0.0f, 1.0f };
+        //    v.Position = tail;
+        //    vertical_vectors.push_back(v);
+        //    v.Color = { 1.0f, 0.0f, 0.5f };
+        //    v.Position = head;
+        //    vertical_vectors.push_back(v);
+        //}
+        //ourMesh_List.push_back(Mesh(vertical_vectors));
+
+        std::vector<Mesh::Vertex> horizontal_vectors;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            glm::vec3 tail = horizontal.getPosition(t);
+            glm::vec3 head;
+            Mesh::Vertex v;
+
+            // tangent
+            head = tail + horizontal.getTangent(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            horizontal_vectors.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = head;
+            horizontal_vectors.push_back(v);
+
+            // normal
+            head = tail + horizontal.getNormal(t) * horizontal.getRadius(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            horizontal_vectors.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = head;
+            horizontal_vectors.push_back(v);
+
+            // normal up
+            head = tail + horizontal.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            horizontal_vectors.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = head;
+            horizontal_vectors.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(horizontal_vectors));
+
+        std::vector<Mesh::Vertex> alignment_vectors;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            glm::vec3 tail = alignment.getPosition(t);
+            glm::vec3 head;
+            Mesh::Vertex v;
+
+            // tangent
+            head = tail + alignment.getTangent(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            alignment_vectors.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = head;
+            alignment_vectors.push_back(v);
+
+            // normal
+            //head = tail + alignment.getNormal(t);// *alignment.getRadius(t);
+            //v.Color = { 1.0f, 0.0f, 1.0f };
+            //v.Position = tail;
+            //alignment_vectors.push_back(v);
+            //v.Color = { 0.5f, 1.0f, 0.5f };
+            //v.Position = head;
+            //alignment_vectors.push_back(v);
+
+            // normal up
+            head = tail + alignment.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            alignment_vectors.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = head;
+            alignment_vectors.push_back(v);
+        }
+        ourMesh_List.push_back(Mesh(alignment_vectors));
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
         // -----------------------------------------------------------------------------------------------------------

@@ -12,6 +12,11 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "Linear_Algebra.h"
+#include "Segment.h"
+
+#define ELEMENTS 100
+
 class glmNURBS
 {
 private:
@@ -24,19 +29,24 @@ private:
 	glm::vec3 deriv2(const float& t) const;
 	// FIND THE ith KNOT SPAN
 	int FindSpan(const float& t) const;
+	
+	// Weights
+	std::vector<float> w;
 	// Degree of the basis function
-	int p;
+	int P;
 	// Knot vector
 	std::vector<float> T;
 
 public:
 	// Control Points
 	std::vector<glm::vec3> points;
-	// Weights
-	std::vector<float> w;
-	
+
 	// DEFAULT CONSTRUCTOR
 	glmNURBS();
+	// OVERLOAD CONSTRUCTOR (from Segments)
+	glmNURBS(const std::vector<Segment*>& segments);
+	// OVERLOAD CONSTRUCTOR (from two curves)
+	glmNURBS(const glmNURBS& horizontal_curve, const glmNURBS& vertical_curve);
 	// DESTRUCTOR
 	~glmNURBS();
 
@@ -54,6 +64,8 @@ public:
 	float getCurvature(const float& t) const;
 	// RETURNS THE RADIUS OF CURVATURE
 	float getRadius(const float& t) const;
+	// RETURNS THE LENGTH OF CURVE
+	float getLength() const;
 	// CLOCKWISE CHECK
 	bool isClockwise(const float& t) const;
 };
