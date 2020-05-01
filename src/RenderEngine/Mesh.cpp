@@ -59,25 +59,6 @@ Mesh::Mesh(const NURBS& curve)
     for (int i = 0; i <= STEPS; i++)
     {
         float t = float(i) / STEPS;
-        CRAB::Vector4Df position = curve.getPosition(t);
-        v.Position = { position.x, position.y, position.z };
-        this->vertices.push_back(v);
-    }
-
-    setupMesh();
-}
-// overload constructor (from glmNURBS curve)
-Mesh::Mesh(const glmNURBS& curve)
-{
-    this->primitive_type = GL_LINE_STRIP;
-    this->with_points = false;
-
-    Mesh::Vertex v;
-    v.Color = { 1.0f, 0.0f, 1.0f };
-
-    for (int i = 0; i <= STEPS; i++)
-    {
-        float t = float(i) / STEPS;
         v.Position = curve.getPosition(t);
         this->vertices.push_back(v);
     }

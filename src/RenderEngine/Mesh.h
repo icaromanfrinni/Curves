@@ -18,7 +18,6 @@
 #include "Bezier.h"
 #include "Bspline.h"
 #include "NURBS.h"
-#include "glmNURBS.h"
 
 #define STEPS 100
 
@@ -31,6 +30,16 @@ public:
         glm::vec3 Position;
         // color
         glm::vec3 Color;
+
+        Vertex()
+        {
+        }
+
+        Vertex(const CRAB::Vector4Df& position, const glm::vec3& color)
+            : Color(color)
+        {
+            Position = glm::vec3(position.x, position.y, position.z);
+        }
     };
 
     /*  Mesh Data  */
@@ -46,8 +55,6 @@ public:
     Mesh(const Bspline& curve);
     // overload constructor (from NURBS curve)
     Mesh(const NURBS& curve);
-    // overload constructor (from glmNURBS curve)
-    Mesh(const glmNURBS& curve);
     // overload constructor (from Control points)
     Mesh(const std::vector<CRAB::Vector4Df> &points);
     // overload constructor (from glm::Control points)

@@ -71,22 +71,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)src\Alignment;$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\opengl\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)src\Alignment;$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\opengl\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)src\Alignment;$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\opengl\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)src\Alignment;$(SolutionDir)src\Segment;$(SolutionDir)src\DataStructures;$(SolutionDir)src\Geometry;$(SolutionDir)src\DataStructures\Material;$(SolutionDir)src\DataStructures\Light;$(SolutionDir)src\RenderEngine;$(SolutionDir)stb;C:\opengl\Includes\glm;C:\opengl\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\opengl\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -150,9 +150,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Alignment\Alignment.cpp" />
     <ClCompile Include="src\Geometry\Bezier.cpp" />
     <ClCompile Include="src\Geometry\Bspline.cpp" />
-    <ClCompile Include="src\Geometry\glmNURBS.cpp" />
     <ClCompile Include="src\Geometry\NURBS.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
@@ -165,12 +165,11 @@
     <ClCompile Include="src\Segment\Segment.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Alignment\Alignment.h" />
     <ClInclude Include="src\DataStructures\Linear_Algebra.h" />
     <ClInclude Include="src\Geometry\Bezier.h" />
     <ClInclude Include="src\Geometry\Bspline.h" />
-    <ClInclude Include="src\Geometry\glmNURBS.h" />
     <ClInclude Include="src\Geometry\NURBS.h" />
-    <ClInclude Include="src\Geometry\Primitives.h" />
     <ClInclude Include="src\RenderEngine\Camera.h" />
     <ClInclude Include="src\RenderEngine\Mesh.h" />
     <ClInclude Include="src\RenderEngine\RenderAPI.h" />
