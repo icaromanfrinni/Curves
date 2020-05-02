@@ -527,7 +527,7 @@ float NURBS::getRadius(const float& t) const
 		return 0.0f;
 
 	float r = 1.0f / this->getCurvature(t);
-	//std::cout << "glm::R = " << r << std::endl;
+	std::cout << "glm::R = " << r << std::endl;
 	return r;
 }
 

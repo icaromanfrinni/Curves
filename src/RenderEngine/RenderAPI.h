@@ -478,13 +478,6 @@ namespace CRAB
             Mesh::Vertex tan_head(head, { 0.5f, 0.0f, 1.0f });
             alignment_vectors.push_back(tan_head);
 
-            // normal horizontal 
-            head = tail + rodovia001.getNormal(t) * rodovia001.getRadius(t);
-            Mesh::Vertex n_tail(tail, { 1.0f, 0.0f, 1.0f });
-            alignment_vectors.push_back(n_tail);
-            Mesh::Vertex n_head(head, { 0.5f, 1.0f, 0.5f });
-            alignment_vectors.push_back(n_head);
-
             // normal up 
             head = tail + rodovia001.getNormalUp(t);
             Mesh::Vertex nup_tail(tail, { 1.0f, 0.0f, 1.0f });
