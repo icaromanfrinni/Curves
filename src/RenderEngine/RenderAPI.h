@@ -492,8 +492,8 @@ namespace CRAB
 
         /*ourMesh_List.push_back(Mesh(rodovia001.path2Dv));
         ourMesh_List.push_back(Mesh(rodovia001.path2Dv.points));*/
-        /*ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
-        ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));*/
+        ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
+        ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));
         ourMesh_List.push_back(Mesh(rodovia001.path3D));
         //ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
 
