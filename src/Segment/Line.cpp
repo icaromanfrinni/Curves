@@ -35,6 +35,14 @@ float Line::getLength() const
 {
 	return glm::distance(p0, p1);
 }
+float Line::getY(const float& x) const
+{
+	float m = (p1.y - p0.y) / (p1.x - p0.x);
+	float y = m * (x - p0.x) + p0.y;
+
+	//std::cout << "y = " << y << std::endl;
+	return y;
+}
 
 // RETURN THE WEIGHT OF THE CONTROL POINT
 // --------------------------------------

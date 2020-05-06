@@ -22,6 +22,7 @@ public:
 	glm::vec3 getMidPoint() const;
 	glm::vec3 getEndPoint() const;
 	float getLength() const;
+	float getY(const float& x) const;
 
 	// RETURN THE WEIGHT OF THE CONTROL POINT
 	float midPointWeight() const;

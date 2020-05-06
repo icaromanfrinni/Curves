@@ -5,7 +5,7 @@ Mesh::Mesh(std::vector<Mesh::Vertex> vertices)
 {
     this->vertices = vertices;
     this->primitive_type = GL_LINES;
-    this->with_points = true;
+    this->with_points = false;
     // now that we have all the required data, set the vertex buffers and its attribute pointers.
     setupMesh();
 }

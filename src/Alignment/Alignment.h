@@ -10,9 +10,17 @@ const float SLOPE_MAX = 0.10f;
 
 class Alignment
 {
+private:
+	float findProjection(const float& t) const;
+	//// GET ELEVATION FROM VERTICAL ALIGNMENT
+	//int findSpan(const float& dx) const;
+	//float getElevation(const float& distance) const;
+	int findSegment(const float& station) const;
+
 public:
+	std::vector<Segment*> profile;	// Vertical alignment
 	NURBS path2Dh;	// Horizontal alignment
-	NURBS path2Dv;	// Vertical alignment
+	//NURBS path2Dv;	// Vertical alignment
 	NURBS path3D;	// 3D alignment
 
 	// DEFAULT CONSTRUCTOR
@@ -25,6 +33,7 @@ public:
 	// RETURN
 	CRAB::Vector4Df getPosition(const float& t) const;
 	CRAB::Vector4Df getTangent(const float& t) const;
+	CRAB::Vector4Df getNormal(const float& t) const;
 	CRAB::Vector4Df getNormalUp(const float& t) const;
 };
 

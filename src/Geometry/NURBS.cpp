@@ -41,39 +41,46 @@ NURBS::NURBS()
 	std::cout << "L = " << this->getLength() << " m" << std::endl;*/
 
 	// ***********************************************************************************
+	// TESTE CLOTÓIDE
 
-	//this->points.push_back({ 0.0f, 10.0f, 0.0f });
-	//this->points.push_back({ 5.0f, 0.0f, 5.0f });
-	//this->points.push_back({ 10.0f, -10.0f, -10.0f });
-	//this->points.push_back({ 15.0f, 0.0f, -15.0f });
-	//this->points.push_back({ 15.0f, 5.0f, 20.0f });
-	//this->points.push_back({ 10.0f, 0.0f, 25.0f });
-	//this->points.push_back({ 5.0f, 0.0f, 30.0f });
+	/*this->points.push_back({ 30.0f, 0.0f, 0.0f });
+	this->points.push_back({ 30.0f, 15.0f, 0.0f });
+	this->points.push_back({ 0.0f, 15.0f, 0.0f });*/
 
-	//// weights
-	//for (int i = 0; i < this->points.size(); i++)
-	//	this->w.push_back(1.0f);
+	this->points.push_back({ 1.75f, 2.75f, 0.0f });
+	this->points.push_back({ 1.75f, 4.0f, 0.0f });
+	this->points.push_back({ 3.0f, 5.0f, 0.0f });
+	this->points.push_back({ 5.0f, 5.0f, 0.0f });
+	this->points.push_back({ 5.75f, 3.5f, 0.0f });
+	this->points.push_back({ 6.5f, 4.75f, 0.0f });
 
-	////this->w = { 1.0f, 1.0f, 1.0f };
-	////this->w = { 1.0f, 1.0f, 2.0f };
-	////this->w = { 1.0f, h, 1.0f };
-	////this->w = { 1.0f, sinf(3.14159f / 4.0f), 1.0f };
-	////this->w = { 1.0f, 1.0f, 1.0f, 1.0f };
-	////this->w = { 1.0f, 0.5f, 0.5f, 1.0f };
-	////this->w = { 1.0f, sinf(3.14159f / 4.0f) / 2.0f, sinf(3.14159f / 4.0f) / 2.0f, 1.0f };
-	////this->w = { 1.0f, 0.7f, 1.0f, 0.7f, 1.0f };
-	////this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	////this->w = { 1.0f, 1.0f, sinf(3.14159f / 4.0f), 1.0f, 1.0f };
-	////this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	////this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	////this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
-	////this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	// weights
+	for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);
 
-	//// degree
+	//this->w = { 1.0f, 1.0f, 1.0f };
+	//this->w = { 2.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 0.5f, 1.0f };
+	//this->w = { 1.0f, h, 1.0f };
+	//this->w = { 1.0f, sinf(3.14159f / 4.0f), 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, sinf(3.14159f / 4.0f) / 2.0f, sinf(3.14159f / 4.0f) / 2.0f, 1.0f };
+	//this->w = { 1.0f, 0.7f, 1.0f, 0.7f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, sinf(M_PI / 4.0f), 0.5f, sinf(M_PI / 4.0f), 1.0f };
+	//this->w = { 1.0f, 1.0f, sinf(3.14159f / 4.0f), 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+
+	// degree
 	//this->P = this->points.size() - 1;
+	this->P = 2;
 
 	// knot vector
-	/*int m = points.size() + this->P;
+	int m = points.size() + this->P;
 	int n = points.size() - 1;
 	for (int i = 0; i <= m; i++)
 	{
@@ -86,11 +93,41 @@ NURBS::NURBS()
 			float u = float(i - this->P) / float(n - this->P + 1);
 			this->T.push_back(u);
 		}
-	}*/
+	}
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.75f, 1.0f, 1.0f, 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f };
+}
+
+// OVERLOAD CONSTRUCTOR (from Points)
+// ----------------------------------
+NURBS::NURBS(const std::vector<glm::vec3>& _points)
+	: points(_points)
+{
+	// weights
+	for (int i = 0; i < this->points.size(); i++)
+		this->w.push_back(1.0f);
+
+	// degree
+	//this->P = this->points.size() - 1;
+	this->P = 3;
+
+	// knot vector
+	int m = points.size() + this->P;
+	int n = points.size() - 1;
+	for (int i = 0; i <= m; i++)
+	{
+		if (i <= this->P)
+			this->T.push_back(0.0f);
+		else if (i > n)
+			this->T.push_back(1.0f);
+		else
+		{
+			float u = float(i - this->P) / float(n - this->P + 1);
+			this->T.push_back(u);
+		}
+	}
 }
 
 // OVERLOAD CONSTRUCTOR (from Segments)
@@ -125,7 +162,7 @@ NURBS::NURBS(const NURBS& horizontal_curve, const NURBS& vertical_curve)
 {
 	/* ----------------------- DEGREE ----------------------- */
 	
-	this->P = 3;
+	this->P = 2;
 
 	/* ------------------- CONTROL POINTS ------------------- */
 
@@ -414,6 +451,8 @@ int NURBS::FindSpan(const float& t) const
 // ----------------------------
 glm::vec3 NURBS::getPosition(const float& t) const
 {
+	//std::cout << "t = " << t << std::endl;
+
 	glm::vec3 position = { 0.0f, 0.0f, 0.0f };
 	int span = this->FindSpan(t);
 
@@ -431,8 +470,8 @@ glm::vec3 NURBS::getPosition(const float& t) const
 		position += (this->points[index] * this->w[index]) * this->N(index, this->P, t) / d;
 	}
 
-	/*glm::vec3 result = position;
-	std::cout << "pos = [" << result.x << "; " << result.y << "; " << result.z << "; " << result.w << "]" << std::endl;*/
+	//glm::vec3 result = position;
+	//std::cout << "pos = [" << result.x << "; " << result.y << "; " << result.z << "]" << std::endl;
 
 	return position;
 
@@ -536,16 +575,36 @@ float NURBS::getRadius(const float& t) const
 float NURBS::getLength() const
 {
 	float L = 0.0f;
-	int nSegments = 100;
-	for (int i = 0; i < nSegments; i++)
+	
+	glm::vec3 A = this->getPosition(0.0f);
+	for (int i = 1; i <= ELEMENTS; i++)
 	{
-		float t = float(i) / nSegments;
-		glm::vec3 A = this->getPosition(t);
-		t = float(i + 1) / nSegments;
+		float t = float(i) / ELEMENTS;
 		glm::vec3 B = this->getPosition(t);
 		L += glm::distance(A, B);
+		A = B;
 	}
 	return L;
+}
+
+// RETURNS THE DISTANCE FROM START
+// -------------------------------
+float NURBS::getDistance(const float& t) const
+{
+	float D = 0.0f;
+	
+	glm::vec3 A = this->getPosition(0.0f);
+	for (int i = 1; i <= ELEMENTS; i++)
+	{
+		float u = t * float(i) / ELEMENTS;
+		glm::vec3 B = this->getPosition(u);
+		D += glm::distance(A, B);
+		A = B;
+	}
+
+	//std::cout << "distance = " << D << std::endl;
+
+	return D;
 }
 
 // CLOCKWISE CHECK
@@ -557,4 +616,58 @@ bool NURBS::isClockwise(const float& t) const
 	if (dotP > 0.0f)
 		return true;
 	else return false;
+}
+
+// RETURNS THE PARAMETER
+// ---------------------
+float NURBS::findParameter(const glm::vec3& P) const
+{
+	// Initial parameter
+	float u = 0.0f;
+
+	// Test point
+	glm::vec3 C = this->getPosition(u);
+	glm::vec3 PC = C - P;
+	glm::vec3 dC = this->deriv(u);
+	glm::vec3 d2C = this->deriv2(u);
+
+	// Euclidean distance
+	float distance = glm::distance(P, C);
+	// Cosine
+	float cosine = fabsf(glm::dot(dC, PC)) / (glm::length(dC) * distance);
+
+	// Newton interaction
+	while (distance > SMALL_NUMBER/* || cosine > SMALL_NUMBER*/)
+	{
+		float f = glm::dot(dC, PC);
+		float df = glm::dot(d2C, PC) + powf(glm::length(dC), 2.0f);
+		float new_u = u - f / df;
+
+		// Criteria 3: in the range
+		/*if (new_u < 0.0f) new_u = 0.0f;
+		if (new_u > 1.0f) new_u = 1.0f;*/
+		// Criteria 4: does not change significantly
+		float e = glm::length(dC * (new_u - u));
+		if (e <= SMALL_NUMBER) break;
+
+		// update
+		C = this->getPosition(new_u);
+		PC = C - P;
+		dC = this->deriv(new_u);
+		d2C = this->deriv2(new_u);
+		u = new_u;
+
+		std::cout << "u = " << u << std::endl;
+
+		// Criteria 1: point coincidence
+		distance = glm::distance(P, C);
+		// Criteria 2: zero cosine
+		cosine = fabsf(glm::dot(dC, PC)) / (glm::length(dC) * distance);
+		
+		
+		std::cout << "distance = " << distance << std::endl;
+		std::cout << "cosine = " << cosine << std::endl;
+	}
+
+	return u;
 }

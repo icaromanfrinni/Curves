@@ -29,7 +29,10 @@ private:
 	glm::vec3 deriv2(const float& t) const;
 	// FIND THE ith KNOT SPAN
 	int FindSpan(const float& t) const;
-	
+
+public:
+	// Control Points
+	std::vector<glm::vec3> points;
 	// Weights
 	std::vector<float> w;
 	// Degree of the basis function
@@ -37,12 +40,10 @@ private:
 	// Knot vector
 	std::vector<float> T;
 
-public:
-	// Control Points
-	std::vector<glm::vec3> points;
-
 	// DEFAULT CONSTRUCTOR
 	NURBS();
+	// OVERLOAD CONSTRUCTOR (from Points)
+	NURBS(const std::vector<glm::vec3>& _points);
 	// OVERLOAD CONSTRUCTOR (from Segments)
 	NURBS(const std::vector<Segment*>& segments);
 	// OVERLOAD CONSTRUCTOR (from two curves)
@@ -66,6 +67,10 @@ public:
 	float getRadius(const float& t) const;
 	// RETURNS THE LENGTH OF CURVE
 	float getLength() const;
+	// RETURNS THE DISTANCE FROM START
+	float getDistance(const float& t) const;
 	// CLOCKWISE CHECK
 	bool isClockwise(const float& t) const;
+	// RETURNS THE PARAMETER
+	float findParameter(const glm::vec3& P) const;
 };
