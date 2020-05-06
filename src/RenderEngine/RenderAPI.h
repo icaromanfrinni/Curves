@@ -505,11 +505,11 @@ namespace CRAB
             CRAB::Vector4Df head;
 
             // tangent
-            /*head = tail + rodovia001.getTangent(t);
+            head = tail + rodovia001.getTangent(t);
             Mesh::Vertex tan_tail(tail, { 1.0f, 0.0f, 1.0f });
             alignment_vectors.push_back(tan_tail);
             Mesh::Vertex tan_head(head, { 0.5f, 0.0f, 1.0f });
-            alignment_vectors.push_back(tan_head);*/
+            alignment_vectors.push_back(tan_head);
 
             // normal
             head = tail + rodovia001.getNormal(t);
