@@ -47,12 +47,33 @@ NURBS::NURBS()
 	this->points.push_back({ 30.0f, 15.0f, 0.0f });
 	this->points.push_back({ 0.0f, 15.0f, 0.0f });*/
 
-	this->points.push_back({ 1.75f, 2.75f, 0.0f });
+	/*this->points.push_back({ 1.75f, 2.75f, 0.0f });
 	this->points.push_back({ 1.75f, 4.0f, 0.0f });
 	this->points.push_back({ 3.0f, 5.0f, 0.0f });
 	this->points.push_back({ 5.0f, 5.0f, 0.0f });
 	this->points.push_back({ 5.75f, 3.5f, 0.0f });
-	this->points.push_back({ 6.5f, 4.75f, 0.0f });
+	this->points.push_back({ 6.5f, 4.75f, 0.0f });*/
+
+	/*this->points.push_back({ 0.0f, 0.0f, 0.0f });
+	this->points.push_back({ 0.0f, 2.0f, 0.0f });
+	this->points.push_back({ 0.0f, 4.0f, 0.0f });
+	this->points.push_back({ 0.0f, 6.0f, 0.0f });
+	this->points.push_back({ 1.0f, 7.0f, 0.0f });
+	this->points.push_back({ 3.8284f, 9.8284f, 0.0f });
+	this->points.push_back({ 6.6569f, 7.0f, 0.0f });*/
+
+	// ***********************************************************************************
+	// TESTE CONTINUIDADE
+
+	this->points.push_back({ 0.0f, 0.0f, 0.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f });
+	this->points.push_back({ 0.0f, 10.0f, 0.0f });
+	this->points.push_back({ 0.0f, 15.0f, 0.0f });
+	this->points.push_back({ 5.0f, 15.0f, 0.0f });
+	this->points.push_back({ 5.0f, 15.0f, 0.0f });
+	this->points.push_back({ 5.0f, 15.0f, 0.0f });
+	this->points.push_back({ 15.0f, 15.0f, 0.0f });
 
 	// weights
 	for (int i = 0; i < this->points.size(); i++)
@@ -60,7 +81,7 @@ NURBS::NURBS()
 
 	//this->w = { 1.0f, 1.0f, 1.0f };
 	//this->w = { 2.0f, 1.0f, 1.0f };
-	//this->w = { 1.0f, 0.5f, 1.0f };
+	//this->w = { 1.0f, cosf(70.0f * M_PI / 180.0f), 1.0f };
 	//this->w = { 1.0f, h, 1.0f };
 	//this->w = { 1.0f, sinf(3.14159f / 4.0f), 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -72,12 +93,11 @@ NURBS::NURBS()
 	//this->w = { 1.0f, 1.0f, sinf(3.14159f / 4.0f), 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-	//this->w = { 1.0f, 0.5f, 0.5f, 1.0f, 0.5f, 0.5f, 1.0f };
+	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, sinf(M_PI / 4.0f), 1.0f };
 	//this->w = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// degree
-	//this->P = this->points.size() - 1;
-	this->P = 2;
+	this->P = this->points.size() - 1;
 
 	// knot vector
 	int m = points.size() + this->P;
@@ -97,7 +117,22 @@ NURBS::NURBS()
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.359f, 0.641f, 1.0f, 1.0f , 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.25f, 0.5f, 0.75f, 1.0f, 1.0f, 1.0f };
+	//this->T = { 0.0f, 0.0f, 0.0f, 0.2957f, 0.2957f, 0.5356f, 0.5356f, 1.0f, 1.0f, 1.0f };
 	//this->T = { 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f };
+	
+	// SEGMENTOS DE ARCOS
+	/*this->points.push_back({ 0.0f, 0.0f, 0.0f });
+	this->points.push_back({ 1.7633f, 0.0f, 0.0f });
+	this->points.push_back({ 3.4204f, 0.6031f, 0.0f });
+	this->points.push_back({ 4.5424f, 1.0115f, 0.0f });
+	this->points.push_back({ 5.4572f, 1.7791f, 0.0f });
+	this->points.push_back({ 6.0850f, 2.3059f, 0.0f });
+	this->points.push_back({ 6.4947f, 3.0156f, 0.0f });
+	this->points.push_back({ 6.7513f, 3.4600f, 0.0f });
+	this->points.push_back({ 6.8404f, 3.9654f, 0.0f });
+	this->w = { 1.0f, 0.95f, 1.0f, 0.95f, 1.0f, 0.95f, 1.0f, 0.95f, 1.0f };
+	this->P = 2;
+	this->T = { 0.0f, 0.0f, 0.0f, 0.411f, 0.411f, 0.6893f, 0.6893f, 0.8803f, 0.8803f, 1.0f, 1.0f, 1.0f };*/
 }
 
 // OVERLOAD CONSTRUCTOR (from Points)

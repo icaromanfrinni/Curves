@@ -54,6 +54,9 @@
     <ClCompile Include="src\Geometry\NURBS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Segment\Clothoid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DataStructures\Linear_Algebra.h">
@@ -93,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Geometry\NURBS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Segment\Clothoid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

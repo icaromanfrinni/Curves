@@ -19,9 +19,10 @@
 
 #include "Line.h"
 #include "CircularArc.h"
+#include "Clothoid.h"
 #include "Alignment.h"
 
-#define DEBUG 3
+#define DEBUG 0
 
 namespace CRAB
 {
@@ -495,7 +496,7 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
         ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));
         ourMesh_List.push_back(Mesh(rodovia001.path3D));
-        //ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
+        ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
 
         std::vector<Mesh::Vertex> alignment_vectors;
         for (int i = 0; i <= STEPS; i++)
@@ -504,12 +505,12 @@ namespace CRAB
             CRAB::Vector4Df tail = rodovia001.getPosition(t);
             CRAB::Vector4Df head;
 
-            // tangent
-            head = tail + rodovia001.getTangent(t);
-            Mesh::Vertex tan_tail(tail, { 1.0f, 0.0f, 1.0f });
-            alignment_vectors.push_back(tan_tail);
-            Mesh::Vertex tan_head(head, { 0.5f, 0.0f, 1.0f });
-            alignment_vectors.push_back(tan_head);
+            //// tangent
+            //head = tail + rodovia001.getTangent(t);
+            //Mesh::Vertex tan_tail(tail, { 1.0f, 0.0f, 1.0f });
+            //alignment_vectors.push_back(tan_tail);
+            //Mesh::Vertex tan_head(head, { 0.5f, 0.0f, 1.0f });
+            //alignment_vectors.push_back(tan_head);
 
             // normal
             head = tail + rodovia001.getNormal(t);
@@ -550,6 +551,110 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(curva3D));
         ourMesh_List.push_back(Mesh(curva3D.points));
 
+#endif
+
+#if DEBUG == 5
+        NURBS curve;
+        ourMesh_List.push_back(Mesh(curve));
+        ourMesh_List.push_back(Mesh(curve.points));
+
+        std::vector<Mesh::Vertex> vectors;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            glm::vec3 tail = curve.getPosition(t);
+            glm::vec3 head;
+            Mesh::Vertex v;
+
+            // tangent
+            /*head = tail + curve.getTangent(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = head;
+            vectors.push_back(v);*/
+
+            // normal
+            head = tail + curve.getNormal(t) * curve.getRadius(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = head;
+            vectors.push_back(v);
+
+            // normal up
+            /*head = tail + curve.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = head;
+            vectors.push_back(v);*/
+        }
+        ourMesh_List.push_back(Mesh(vectors));
+#endif
+
+#if DEBUG == 6
+        // Bezier
+        /*Bezier b;
+        ourMesh_List.push_back(Mesh(b));
+        ourMesh_List.push_back(Mesh(b.points));*/
+
+        // Arcs
+        std::vector<Segment*> arcs;
+        //arcs.push_back(new CircularArc(glm::vec3(-9.0f, 3.0f, 0.0f), glm::vec3(-5.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)));
+        // Clothoid
+        Clothoid c;
+        for (int i = 0; i < c.segments.size(); i++)
+            arcs.push_back(c.segments[i]);
+        //arcs.push_back(new CircularArc(glm::vec3(20.0f, 10.0f, 0.0f), glm::vec3(21.77f, 11.77f, 0.0f), glm::vec3(22.12f, 14.24f, 0.0f)));
+        // Criar curva Nurbs
+        NURBS curve(arcs);
+        std::cout << "L = " << curve.getLength() << std::endl;
+        // Desenhar
+        ourMesh_List.push_back(Mesh(curve));
+        ourMesh_List.push_back(Mesh(curve.points));
+
+        std::vector<Mesh::Vertex> vectors;
+        for (int i = 0; i <= STEPS; i++)
+        {
+            float t = float(i) / STEPS;
+            glm::vec3 tail = curve.getPosition(t);
+            glm::vec3 head;
+            Mesh::Vertex v;
+
+            // tangent
+            /*head = tail + curve.getTangent(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 0.5f, 0.0f, 1.0f };
+            v.Position = head;
+            vectors.push_back(v);*/
+
+            // normal
+            head = tail + curve.getNormal(t) * curve.getRadius(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 0.5f, 1.0f, 0.5f };
+            v.Position = head;
+            vectors.push_back(v);
+
+            std::cout << "Ls = " << curve.getDistance(t) << std::endl;
+
+            // normal up
+            /*head = tail + curve.getNormalUp(t);
+            v.Color = { 1.0f, 0.0f, 1.0f };
+            v.Position = tail;
+            vectors.push_back(v);
+            v.Color = { 1.0f, 0.0f, 0.5f };
+            v.Position = head;
+            vectors.push_back(v);*/
+        }
+        ourMesh_List.push_back(Mesh(vectors));
 #endif
 
         // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)

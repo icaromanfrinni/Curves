@@ -10,7 +10,7 @@ Alignment::Alignment()
 // DEFAULT CONSTRUCTOR
 // -------------------
 Alignment::Alignment(const std::vector<Segment*>& horizontal, const std::vector<Segment*>& vertical)
-	: path2Dh(NURBS(horizontal)), profile(vertical)
+	: path2Dh(NURBS(horizontal)), roadplan(horizontal), profile(vertical)
 {
 	//this->path2Dh = NURBS(horizontal);
 	//this->path2Dv = NURBS(vertical);

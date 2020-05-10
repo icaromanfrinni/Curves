@@ -161,6 +161,7 @@
     <ClCompile Include="src\RenderEngine\Shader.cpp" />
     <ClCompile Include="src\RenderEngine\Skybox.cpp" />
     <ClCompile Include="src\Segment\CircularArc.cpp" />
+    <ClCompile Include="src\Segment\Clothoid.cpp" />
     <ClCompile Include="src\Segment\Line.cpp" />
     <ClCompile Include="src\Segment\Segment.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="src\RenderEngine\Shader.h" />
     <ClInclude Include="src\RenderEngine\Skybox.h" />
     <ClInclude Include="src\Segment\CircularArc.h" />
+    <ClInclude Include="src\Segment\Clothoid.h" />
     <ClInclude Include="src\Segment\Line.h" />
     <ClInclude Include="src\Segment\Segment.h" />
   </ItemGroup>

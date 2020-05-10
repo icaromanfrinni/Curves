@@ -4,9 +4,12 @@
 // -------------------
 Bezier::Bezier()
 {
-	this->points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 2.0f, 1.0f });
+	/*this->points.push_back(CRAB::Vector4Df{ 10.0f, 0.0f, 2.0f, 1.0f });
 	this->points.push_back(CRAB::Vector4Df{ 10.0f, 10.0f, 2.0f, 1.0f });
-	this->points.push_back(CRAB::Vector4Df{ 0.0f, 10.0f, 2.0f, 1.0f });
+	this->points.push_back(CRAB::Vector4Df{ 0.0f, 10.0f, 2.0f, 1.0f });*/
+	this->points.push_back({ 0.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 10.0f, 0.0f, 0.0f, 1.0f });
+	this->points.push_back({ 20.0f, 10.0f, 0.0f, 1.0f });
 }
 
 // DESTRUCTOR

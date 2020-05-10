@@ -18,9 +18,10 @@ private:
 	int findSegment(const float& station) const;
 
 public:
+	std::vector<Segment*> roadplan;	// Horizontal alignment
 	std::vector<Segment*> profile;	// Vertical alignment
-	NURBS path2Dh;	// Horizontal alignment
-	//NURBS path2Dv;	// Vertical alignment
+
+	NURBS path2Dh;	// Horizontal curve
 	NURBS path3D;	// 3D alignment
 
 	// DEFAULT CONSTRUCTOR
