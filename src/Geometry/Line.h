@@ -2,29 +2,34 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include "Segment.h"
+#include "Geometry.h"
 
 class Line
-	: public Segment
+	: public Geometry
 {
 	glm::vec3 p0, p1;
 
 public:
 	// DEFAULT CONSTRUCTOR
 	Line();
-	// OVERLOAD CONSTRUCTOR (from CRAB::Vector4Df)
+	// OVERLOAD CONSTRUCTOR (from two points)
 	Line(const glm::vec3 &_p0, const glm::vec3 &_p1);
 	// DESTRUCTOR
 	~Line();
 
-	// RETURN
+	// RETURN (glm::vec3)
 	glm::vec3 getStartPoint() const;
 	glm::vec3 getMidPoint() const;
 	glm::vec3 getEndPoint() const;
+	// RETURN (CRAB::Vector4Df)
+	CRAB::Vector4Df getStart4DPoint() const;
+	CRAB::Vector4Df getMid4DPoint() const;
+	CRAB::Vector4Df getEnd4DPoint() const;
+	// RETURNS THE SEGMENT LENGTH
 	float getLength() const;
+	// RETURNS THE ELEVATION
 	float getY(const float& x) const;
-
-	// RETURN THE WEIGHT OF THE CONTROL POINT
+	// RETURNS THE WEIGHT OF THE CONTROL POINT
 	float midPointWeight() const;
 };
 

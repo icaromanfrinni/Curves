@@ -17,8 +17,8 @@ Line::~Line()
 {
 }
 
-// RETURN
-// ------
+// RETURN (glm::vec3)
+// ------------------
 glm::vec3 Line::getStartPoint() const
 {
 	return p0;
@@ -31,16 +31,35 @@ glm::vec3 Line::getEndPoint() const
 {
 	return p1;
 }
+
+// RETURN (CRAB::Vector4Df)
+// ------------------------
+CRAB::Vector4Df Line::getStart4DPoint() const
+{
+	return { p0.x, p0.y, p0.z, 1.0f };
+}
+CRAB::Vector4Df Line::getMid4DPoint() const
+{
+	return { this->getMidPoint().x, this->getMidPoint().y, this->getMidPoint().z, 1.0f };
+}
+CRAB::Vector4Df Line::getEnd4DPoint() const
+{
+	return { p1.x, p1.y, p1.z, 1.0f };
+}
+
+// RETURNS THE SEGMENT LENGTH
+// --------------------------
 float Line::getLength() const
 {
 	return glm::distance(p0, p1);
 }
+
+// RETURN THE ELEVATION
+// --------------------
 float Line::getY(const float& x) const
 {
-	float m = (p1.y - p0.y) / (p1.x - p0.x);
-	float y = m * (x - p0.x) + p0.y;
-
-	//std::cout << "y = " << y << std::endl;
+	float m = (this->getEndPoint().y - this->getStartPoint().y) / (this->getEndPoint().x - this->getStartPoint().x);
+	float y = m * (x - this->getStartPoint().x) + this->getStartPoint().y;
 	return y;
 }
 

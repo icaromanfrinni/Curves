@@ -10,7 +10,7 @@
 class Clothoid
 {
 public:
-	std::vector<Segment*> segments;
+	std::vector<Geometry*> segments;
 
 	// DEFAULT CONSTRUCTOR
 	Clothoid();

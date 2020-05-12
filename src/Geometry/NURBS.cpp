@@ -167,7 +167,7 @@ NURBS::NURBS(const std::vector<glm::vec3>& _points)
 
 // OVERLOAD CONSTRUCTOR (from Segments)
 // ------------------------------------
-NURBS::NURBS(const std::vector<Segment*> &segments)
+NURBS::NURBS(const std::vector<Geometry*> &segments)
 {
 	this->P = 2;
 	float distance = 0.0;

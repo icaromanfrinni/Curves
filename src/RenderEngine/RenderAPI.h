@@ -17,12 +17,9 @@
 #include "Camera.h"
 #include "Mesh.h"
 
-#include "Line.h"
-#include "CircularArc.h"
-#include "Clothoid.h"
 #include "Alignment.h"
 
-#define DEBUG 0
+#define DEBUG 3
 
 namespace CRAB
 {
@@ -338,29 +335,29 @@ namespace CRAB
         // *********************** EXEMPLO - REUNIÃO 13 ***********************
         // ********************************************************************
 
-        std::vector<Segment*> road;
-        road.push_back(new Line(glm::vec3(40.0f, 0.0f, 80.0f), glm::vec3(40.0f, 0.0f, 20.0f)));
-        road.push_back(new CircularArc(glm::vec3(40.0f, 0.0f, 20.0f), glm::vec3(40.0f, 0.0f, 0.0f), glm::vec3(20.0f, 0.0f, 0.0f)));
-        road.push_back(new CircularArc(glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 20.0f)));
-        road.push_back(new CircularArc(glm::vec3(0.0f, 0.0f, 20.0f), glm::vec3(0.0f, 0.0f, 40.0f), glm::vec3(20.0f, 0.0f, 40.0f)));
-        road.push_back(new Line(glm::vec3(20.0f, 0.0f, 40.0f), glm::vec3(100.0f, 0.0f, 40.0f)));
-        road.push_back(new CircularArc(glm::vec3(100.0f, 0.0f, 40.0f), glm::vec3(120.0f, 0.0f, 40.0f), glm::vec3(120.0f, 0.0f, 60.0f)));
-        road.push_back(new CircularArc(glm::vec3(120.0f, 0.0f, 60.0f), glm::vec3(120.0f, 0.0f, 80.0f), glm::vec3(100.0f, 0.0f, 80.0f)));
-        road.push_back(new CircularArc(glm::vec3(100.0f, 0.0f, 80.0f), glm::vec3(80.0f, 0.0f, 80.0f), glm::vec3(80.0f, 0.0f, 60.0f)));
-        road.push_back(new Line(glm::vec3(80.0f, 0.0f, 60.0f), glm::vec3(80.0f, 0.0f, 0.0f)));
+        std::vector<HorSegment*> road;
+        road.push_back(new HorSegment(glm::vec3(40.0f, 0.0f, 80.0f), glm::vec3(40.0f, 0.0f, 20.0f)));
+        road.push_back(new HorSegment(glm::vec3(40.0f, 0.0f, 20.0f), glm::vec3(40.0f, 0.0f, 0.0f), glm::vec3(20.0f, 0.0f, 0.0f)));
+        road.push_back(new HorSegment(glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 20.0f)));
+        road.push_back(new HorSegment(glm::vec3(0.0f, 0.0f, 20.0f), glm::vec3(0.0f, 0.0f, 40.0f), glm::vec3(20.0f, 0.0f, 40.0f)));
+        road.push_back(new HorSegment(glm::vec3(20.0f, 0.0f, 40.0f), glm::vec3(100.0f, 0.0f, 40.0f)));
+        road.push_back(new HorSegment(glm::vec3(100.0f, 0.0f, 40.0f), glm::vec3(120.0f, 0.0f, 40.0f), glm::vec3(120.0f, 0.0f, 60.0f)));
+        road.push_back(new HorSegment(glm::vec3(120.0f, 0.0f, 60.0f), glm::vec3(120.0f, 0.0f, 80.0f), glm::vec3(100.0f, 0.0f, 80.0f)));
+        road.push_back(new HorSegment(glm::vec3(100.0f, 0.0f, 80.0f), glm::vec3(80.0f, 0.0f, 80.0f), glm::vec3(80.0f, 0.0f, 60.0f)));
+        road.push_back(new HorSegment(glm::vec3(80.0f, 0.0f, 60.0f), glm::vec3(80.0f, 0.0f, 0.0f)));
 
-        std::vector<Segment*> grade;
-        grade.push_back(new Line(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(50.0f, 0.0f, 0.0f)));
-        grade.push_back(new CircularArc(glm::vec3(50.0f, 0.0f, 0.0f), glm::vec3(60.0f, 0.0f, 0.0f), glm::vec3(69.94f, 1.06f, 0.0f)));
-        grade.push_back(new Line(glm::vec3(69.94f, 1.06f, 0.0f), glm::vec3(144.3f, 8.94f, 0.0f)));
-        grade.push_back(new CircularArc(glm::vec3(144.3f, 8.94f, 0.0f), glm::vec3(154.25f, 10.0f, 0.0f), glm::vec3(164.25f, 10.0f, 0.0f)));
-        grade.push_back(new Line(glm::vec3(164.25f, 10.0f, 0.0f), glm::vec3(224.25f, 10.0f, 0.0f)));
-        grade.push_back(new CircularArc(glm::vec3(224.25f, 10.0f, 0.0f), glm::vec3(234.25f, 10.0f, 0.0f), glm::vec3(244.19f, 8.94f, 0.0f)));
-        grade.push_back(new Line(glm::vec3(244.19f, 8.94f, 0.0f), glm::vec3(318.55f, 1.06f, 0.0f)));
-        grade.push_back(new CircularArc(glm::vec3(318.55f, 1.06f, 0.0f), glm::vec3(328.5f, 0.0f, 0.0f), glm::vec3(338.5f, 0.0f, 0.0f)));
-        grade.push_back(new Line(glm::vec3(338.5f, 0.0f, 0.0f), glm::vec3(388.5f, 0.0f, 0.0f)));
+        std::vector<VerSegment*> grade;
+        grade.push_back(new VerSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(50.0f, 0.0f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(50.0f, 0.0f, 0.0f), glm::vec3(60.0f, 0.0f, 0.0f), glm::vec3(69.94f, 1.06f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(69.94f, 1.06f, 0.0f), glm::vec3(144.3f, 8.94f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(144.3f, 8.94f, 0.0f), glm::vec3(154.25f, 10.0f, 0.0f), glm::vec3(164.25f, 10.0f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(164.25f, 10.0f, 0.0f), glm::vec3(224.25f, 10.0f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(224.25f, 10.0f, 0.0f), glm::vec3(234.25f, 10.0f, 0.0f), glm::vec3(244.19f, 8.94f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(244.19f, 8.94f, 0.0f), glm::vec3(318.55f, 1.06f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(318.55f, 1.06f, 0.0f), glm::vec3(328.5f, 0.0f, 0.0f), glm::vec3(338.5f, 0.0f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(338.5f, 0.0f, 0.0f), glm::vec3(388.5f, 0.0f, 0.0f)));
 
-        // *******************************************************
+        // ********************************************************************
 
 #if DEBUG == 2
 
@@ -496,7 +493,7 @@ namespace CRAB
         ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
         ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));
         ourMesh_List.push_back(Mesh(rodovia001.path3D));
-        ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
+        //ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
 
         std::vector<Mesh::Vertex> alignment_vectors;
         for (int i = 0; i <= STEPS; i++)

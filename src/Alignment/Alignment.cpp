@@ -9,20 +9,28 @@ Alignment::Alignment()
 
 // DEFAULT CONSTRUCTOR
 // -------------------
-Alignment::Alignment(const std::vector<Segment*>& horizontal, const std::vector<Segment*>& vertical)
-	: path2Dh(NURBS(horizontal)), roadplan(horizontal), profile(vertical)
+Alignment::Alignment(const std::vector<HorSegment*>& _plan, const std::vector<VerSegment*>& _profile)
+	: plan(_plan), profile(_profile)
 {
-	//this->path2Dh = NURBS(horizontal);
-	//this->path2Dv = NURBS(vertical);
-	//this->path3D = NURBS(this->path2Dh, this->path2Dv);
+	// 2D Horizontal Curve CONSTRUCTOR
+	// -------------------------------
+	std::vector<Geometry*> hor2DSegments;
+	for (int i = 0; i < this->plan.size(); i++)
+	{
+		if (this->plan[i]->transition)
+		{
+			std::vector<Geometry*> horizontal_curve = this->plan[i]->HorizontalCurve();
+			hor2DSegments.insert(hor2DSegments.end(), horizontal_curve.begin(), horizontal_curve.end());
+		}
+		else hor2DSegments.push_back(this->plan[i]->segment);
+	}
+	this->path2Dh = NURBS(hor2DSegments);
 
-	// control points of 3D curve
-	// --------------------------
+	// 3D Curve CONSTRUCTOR
+	// --------------------
 	std::vector<glm::vec3> points3D;
 	for (int i = 0; i <= ELEMENTS; i++)
 	{
-		//std::cout << "\ni = " << i << std::endl;
-
 		float t = float(i) / ELEMENTS;
 		// coordenadas em planta (UTM)
 		points3D.push_back(this->path2Dh.getPosition(t));
@@ -176,6 +184,7 @@ CRAB::Vector4Df Alignment::getNormal(const float& t) const
 	float tan_alfa = 0.0044f * powf(60.0f, 2.0f) / hor_radius;
 	if (tan_alfa > SLOPE_MAX)
 		tan_alfa = SLOPE_MAX;
+	std::cout << "e = " << tan_alfa << std::endl;
 	float alfa = atanf(tan_alfa) * 180.0f / M_PI;
 	//if (this->path2Dh.isClockwise(tp))
 	if (this->path2Dh.isClockwise(t))
