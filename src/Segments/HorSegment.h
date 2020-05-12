@@ -34,11 +34,11 @@ public:
 	// OVERLOAD CONSTRUCTOR (Horizontal Circular Arc)
 	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2);
 	// OVERLOAD CONSTRUCTOR (Circular Arc with Transition Curve)
-	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _S, const float& _kB);
+	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _kB);
 	// DESTRUCTOR
 	~HorSegment();
 
-	// RETURN DISCRETIZED HORIZONTAL CURVE WITH SPIRAL TRANSITION
+	// RETURN DISCRETIZED HORIZONTAL CURVE WITH SPIRAL TRANSITION SYMMETRIC
 	std::vector<Geometry*> HorizontalCurve() const;
 };
 

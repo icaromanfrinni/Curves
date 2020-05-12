@@ -335,7 +335,7 @@ namespace CRAB
         // *********************** EXEMPLO - REUNIÃO 13 ***********************
         // ********************************************************************
 
-        std::vector<HorSegment*> road;
+        /*std::vector<HorSegment*> road;
         road.push_back(new HorSegment(glm::vec3(40.0f, 0.0f, 80.0f), glm::vec3(40.0f, 0.0f, 20.0f)));
         road.push_back(new HorSegment(glm::vec3(40.0f, 0.0f, 20.0f), glm::vec3(40.0f, 0.0f, 0.0f), glm::vec3(20.0f, 0.0f, 0.0f)));
         road.push_back(new HorSegment(glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 20.0f)));
@@ -355,9 +355,20 @@ namespace CRAB
         grade.push_back(new VerSegment(glm::vec3(224.25f, 10.0f, 0.0f), glm::vec3(234.25f, 10.0f, 0.0f), glm::vec3(244.19f, 8.94f, 0.0f)));
         grade.push_back(new VerSegment(glm::vec3(244.19f, 8.94f, 0.0f), glm::vec3(318.55f, 1.06f, 0.0f)));
         grade.push_back(new VerSegment(glm::vec3(318.55f, 1.06f, 0.0f), glm::vec3(328.5f, 0.0f, 0.0f), glm::vec3(338.5f, 0.0f, 0.0f)));
-        grade.push_back(new VerSegment(glm::vec3(338.5f, 0.0f, 0.0f), glm::vec3(388.5f, 0.0f, 0.0f)));
+        grade.push_back(new VerSegment(glm::vec3(338.5f, 0.0f, 0.0f), glm::vec3(388.5f, 0.0f, 0.0f)));*/
 
-        // ********************************************************************
+        // ****************************************************************************************
+        // *********************** EXEMPLO - CURVA HORIZONTAL COM TRANSIÇÃO ***********************
+        // ****************************************************************************************
+
+        std::vector<HorSegment*> road;
+        road.push_back(new HorSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 0.0f, 0.0f), glm::vec3(200.0f, 0.0f, 200.0f), 1.0f / 150.0f));
+        road.push_back(new HorSegment(glm::vec3(200.0f, 0.0f, 200.0f), glm::vec3(200.0f, 0.0f, 400.0f), glm::vec3(400.0f, 0.0f, 400.0f), 1.0f / 150.0f));
+
+        std::vector<VerSegment*> grade;
+        grade.push_back(new VerSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(300.0f, 50.0f, 0.0f)));
+
+        // ****************************************************************************************
 
 #if DEBUG == 2
 

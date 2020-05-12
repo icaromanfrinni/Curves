@@ -24,13 +24,17 @@ HorSegment::HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::ve
 
 // OVERLOAD CONSTRUCTOR (Circular Arc with Transition Curve)
 // ---------------------------------------------------------
-HorSegment::HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _S, const float& _kB)
+HorSegment::HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _kB)
 {
 	this->segment = new CircularArc(_p0, _p1, _p2);
 	this->transition = true;
 	this->spiral.kA = 0.0f;
 	this->spiral.kB = _kB;
-	this->spiral.S = _S;
+	//this->spiral.S = _S;
+	// Comprimento mínimo do trecho em espiral (critério dinâmico)
+	float Vp = 80.0f; // km/h
+	float Rc = 1.0f / _kB;
+	this->spiral.S = 0.036 * powf(Vp, 3.0f) / Rc;
 }
 
 // DESTRUCTOR
@@ -39,7 +43,8 @@ HorSegment::~HorSegment()
 {
 }
 
-// RETURN DISCRETIZED HORIZONTAL CURVE WITH SPIRAL TRANSITION
+// RETURN DISCRETIZED HORIZONTAL CURVE WITH SPIRAL TRANSITION SYMMETRIC
+// --------------------------------------------------------------------
 std::vector<Geometry*> HorSegment::HorizontalCurve() const
 {
 	std::vector<Geometry*> StartSpiral;
