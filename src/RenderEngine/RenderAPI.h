@@ -361,12 +361,11 @@ namespace CRAB
         // *********************** EXEMPLO - CURVA HORIZONTAL COM TRANSIÇÃO ***********************
         // ****************************************************************************************
 
-        std::vector<HorSegment*> road;
-        road.push_back(new HorSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 0.0f, 0.0f), glm::vec3(200.0f, 0.0f, 200.0f), 1.0f / 150.0f));
-        road.push_back(new HorSegment(glm::vec3(200.0f, 0.0f, 200.0f), glm::vec3(200.0f, 0.0f, 400.0f), glm::vec3(400.0f, 0.0f, 400.0f), 1.0f / 150.0f));
+        std::vector<HorSegment*> road_plan;
+        road_plan.push_back(new HorSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(300.0f, 0.0f, 300.0f), 50.0f, 1.0f / 264.0f));
 
-        std::vector<VerSegment*> grade;
-        grade.push_back(new VerSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(300.0f, 50.0f, 0.0f)));
+        std::vector<VerSegment*> profile;
+        profile.push_back(new VerSegment(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(30.0f, 0.0f, 0.0f)));
 
         // ****************************************************************************************
 
@@ -497,12 +496,12 @@ namespace CRAB
 #endif
 
 #if DEBUG == 3
-        Alignment rodovia001(road, grade);
+        Alignment rodovia001(road_plan, profile);
 
         /*ourMesh_List.push_back(Mesh(rodovia001.path2Dv));
         ourMesh_List.push_back(Mesh(rodovia001.path2Dv.points));*/
-        ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
-        ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));
+        /*ourMesh_List.push_back(Mesh(rodovia001.path2Dh));
+        ourMesh_List.push_back(Mesh(rodovia001.path2Dh.points));*/
         ourMesh_List.push_back(Mesh(rodovia001.path3D));
         //ourMesh_List.push_back(Mesh(rodovia001.path3D.points));
 
@@ -535,6 +534,29 @@ namespace CRAB
             alignment_vectors.push_back(nup_head);
         }
         ourMesh_List.push_back(Mesh(alignment_vectors));
+
+        /*for (int i = 0; i <= ELEMENTS; i++)
+        {
+            float t = float(i) / ELEMENTS;
+            glm::vec3 p = rodovia001.path2Dh.getPosition(t);
+            float R = rodovia001.path2Dh.getRadius(t);
+            float L = rodovia001.path2Dh.getDistance(t);
+
+            std::cout << "\n" << std::endl;
+            std::cout << "\ti = " << i << std::endl;
+            std::cout << "p = [" << p.x << "; " << p.y << "; " << p.z << "]" << std::endl;
+            std::cout << "R(" << t << ") = " << R << std::endl;
+            std::cout << "L(" << t << ") = " << L << std::endl;
+        }*/
+
+        /*for (int i = 0; i < rodovia001.path2Dh.points.size(); i++)
+        {
+            glm::vec3 p = rodovia001.path2Dh.points[i];
+
+            std::cout << "\n" << std::endl;
+            std::cout << "\ti = " << i << std::endl;
+            std::cout << "p = [" << p.x << "; " << p.y << "; " << p.z << "]" << std::endl;
+        }*/
 #endif
 
 #if DEBUG == 4

@@ -5,11 +5,18 @@
 Line::Line()
 {
 }
-// OVERLOAD CONSTRUCTOR (from CRAB::Vector4Df)
-// -------------------------------------------
+// OVERLOAD CONSTRUCTOR (from two points)
+// --------------------------------------
 Line::Line(const glm::vec3 & _p0, const glm::vec3 & _p1)
 	: p0(_p0), p1(_p1)
 {
+}
+// OVERLOAD CONSTRUCTOR (from CRAB::Vector4Df)
+// -------------------------------------------
+Line::Line(const CRAB::Vector4Df& _p0, const CRAB::Vector4Df& _p1)
+{
+	this->p0 = glm::vec3(_p0.x, _p0.y, _p0.z);
+	this->p1 = glm::vec3(_p1.x, _p1.y, _p1.z);
 }
 // DESTRUCTOR
 // ----------

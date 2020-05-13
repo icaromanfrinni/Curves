@@ -146,7 +146,7 @@ NURBS::NURBS(const std::vector<glm::vec3>& _points)
 
 	// degree
 	//this->P = this->points.size() - 1;
-	this->P = 3;
+	this->P = 2;
 
 	// knot vector
 	int m = points.size() + this->P;
@@ -169,6 +169,8 @@ NURBS::NURBS(const std::vector<glm::vec3>& _points)
 // ------------------------------------
 NURBS::NURBS(const std::vector<Geometry*> &segments)
 {
+	//std::cout << "segments.size() = " << segments.size() << std::endl;
+
 	this->P = 2;
 	float distance = 0.0;
 	this->T = { 0.0f, 0.0f, 0.0f };
@@ -601,7 +603,9 @@ float NURBS::getRadius(const float& t) const
 		return 0.0f;
 
 	float r = 1.0f / this->getCurvature(t);
-	std::cout << "glm::R = " << r << std::endl;
+	std::cout << "\n" << std::endl;
+	std::cout << "R(" << t << ") = " << r << std::endl;
+	std::cout << "L(" << t << ") = " << this->getDistance(t) << std::endl;
 	return r;
 }
 

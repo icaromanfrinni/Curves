@@ -133,7 +133,7 @@ float Alignment::findProjection(const float& t) const
 int Alignment::findSegment(const float& station) const
 {
 	// special case
-	if (station > profile.back()->getStartPoint().x)
+	if (station >= profile.back()->getStartPoint().x)
 		return profile.size() - 1;
 
 	int low = 0;
@@ -184,7 +184,7 @@ CRAB::Vector4Df Alignment::getNormal(const float& t) const
 	float tan_alfa = 0.0044f * powf(60.0f, 2.0f) / hor_radius;
 	if (tan_alfa > SLOPE_MAX)
 		tan_alfa = SLOPE_MAX;
-	std::cout << "e = " << tan_alfa << std::endl;
+	//std::cout << "e = " << tan_alfa << std::endl;
 	float alfa = atanf(tan_alfa) * 180.0f / M_PI;
 	//if (this->path2Dh.isClockwise(tp))
 	if (this->path2Dh.isClockwise(t))

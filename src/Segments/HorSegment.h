@@ -19,6 +19,8 @@ struct Clothoid
 
 class HorSegment
 {
+	std::vector<Geometry*> DiscretizedClothoid(const CRAB::Vector4Df& A, const CRAB::Vector4Df& B, const CRAB::Vector4Df& V) const;
+	std::vector<Geometry*> DiscretizedClothoidInverted(const CRAB::Vector4Df& B, const CRAB::Vector4Df& A, const CRAB::Vector4Df& V) const;
 
 public:
 	// Straight Line || Circular Arc || Circular Arc with Transition Curve (Clothoid)
@@ -34,7 +36,7 @@ public:
 	// OVERLOAD CONSTRUCTOR (Horizontal Circular Arc)
 	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2);
 	// OVERLOAD CONSTRUCTOR (Circular Arc with Transition Curve)
-	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _kB);
+	HorSegment(const glm::vec3& _p0, const glm::vec3& _p1, const glm::vec3& _p2, const float& _S, const float& _kB);
 	// DESTRUCTOR
 	~HorSegment();
 

@@ -14,6 +14,8 @@ public:
 	Line();
 	// OVERLOAD CONSTRUCTOR (from two points)
 	Line(const glm::vec3 &_p0, const glm::vec3 &_p1);
+	// OVERLOAD CONSTRUCTOR (from CRAB::Vector4Df)
+	Line(const CRAB::Vector4Df& _p0, const CRAB::Vector4Df& _p1);
 	// DESTRUCTOR
 	~Line();
 
